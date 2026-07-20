@@ -1,0 +1,80 @@
+name: autocare_manager
+description: AutoCare Manager — vehicle maintenance and oil change record management.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # State management
+  flutter_riverpod: ^2.6.1
+
+  # Navigation
+  go_router: ^14.8.1
+
+  # Database
+  drift: ^2.26.0
+  drift_flutter: ^0.2.4
+  sqlite3_flutter_libs: ^0.5.32
+  path_provider: ^2.1.6
+  path: ^1.9.1
+
+  # UI & formatting
+  google_fonts: ^6.2.1
+  intl: ^0.20.2
+
+  # Utilities
+  equatable: ^2.0.7
+  uuid: ^4.5.1
+  shared_preferences: ^2.5.3
+  url_launcher: ^6.3.2
+  fl_chart: ^1.2.0
+  flutter_local_notifications: ^22.0.1
+  timezone: ^0.11.1
+  workmanager: ^0.9.0+3
+  permission_handler: ^12.0.3
+  device_info_plus: ^13.2.0
+  pdf: ^3.12.0
+  printing: ^5.14.3
+  share_plus: ^13.2.1
+  csv: ^8.0.0
+  excel: ^4.0.6
+  firebase_core: ^4.12.1
+  firebase_auth: ^6.5.6
+  cloud_firestore: ^6.7.1
+  connectivity_plus: ^7.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  drift_dev: ^2.26.0
+  build_runner: ^2.4.15
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/branding/app_icon.png
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: assets/branding/app_icon.png
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: assets/branding/app_icon.png
+    background_color: "#000000"
+    theme_color: "#C9A227"
+  macos:
+    generate: true
+    image_path: assets/branding/app_icon.png
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/branding/

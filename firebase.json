@@ -1,0 +1,33 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "autos-app-634d8",
+          "appId": "1:198583765464:android:87822e91760675c3558aad",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "autos-app-634d8",
+          "appId": "1:198583765464:ios:28529b339c24bae9558aad",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "autos-app-634d8",
+          "configurations": {
+            "android": "1:198583765464:android:87822e91760675c3558aad",
+            "ios": "1:198583765464:ios:28529b339c24bae9558aad"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}
