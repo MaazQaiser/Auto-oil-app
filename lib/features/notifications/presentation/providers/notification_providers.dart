@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/config/app_config.dart';
@@ -34,10 +33,9 @@ final notificationPermissionServiceProvider =
 });
 
 final notificationSchedulerProvider = Provider<NotificationScheduler>((ref) {
-  final SharedPreferences prefs = ref.watch(settingsServiceProvider).prefs;
   return NotificationScheduler(
     ref.watch(notificationServiceProvider),
-    prefs,
+    ref.watch(syncOutboxDataSourceProvider),
   );
 });
 

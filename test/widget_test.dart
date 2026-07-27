@@ -7,7 +7,7 @@ import 'package:autocare_manager/core/utils/currency_formatter.dart';
 void main() {
   group('AppConfig', () {
     test('has expected app name', () {
-      expect(AppConfig.appName, 'AutoCare Manager');
+      expect(AppConfig.appName, 'Muzammil Autos');
     });
   });
 

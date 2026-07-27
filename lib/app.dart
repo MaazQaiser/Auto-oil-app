@@ -9,6 +9,7 @@ import 'core/theme/app_theme.dart';
 import 'features/notifications/domain/services/notification_service.dart';
 import 'features/notifications/presentation/providers/notification_providers.dart';
 import 'features/reminders/presentation/providers/reminder_providers.dart';
+import 'features/settings/providers/settings_provider.dart';
 import 'shared/providers/theme_provider.dart';
 
 /// Root application widget with resume-time reminder checks.
@@ -39,10 +40,13 @@ class _AutoCareAppState extends ConsumerState<AutoCareApp>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      ref.read(notificationManagerProvider).runReminderCheck();
+    if (state == AppLifecycleState.resumed ||
+        state == AppLifecycleState.inactive) {
+      if (state == AppLifecycleState.resumed) {
+        ref.read(notificationManagerProvider).runReminderCheck();
+        _handlePendingNotification();
+      }
       ref.read(syncEngineProvider).scheduleSync();
-      _handlePendingNotification();
     }
   }
 
@@ -76,6 +80,7 @@ class _AutoCareAppState extends ConsumerState<AutoCareApp>
   Widget build(BuildContext context) {
     // Keep Firebase offline sync warm while signed in.
     ref.watch(syncBootstrapProvider);
+    ref.watch(userProfileBootstrapProvider);
 
     // Re-run handler when a notification sets pending payload.
     ref.listen(pendingNotificationPayloadProvider, (prev, next) {

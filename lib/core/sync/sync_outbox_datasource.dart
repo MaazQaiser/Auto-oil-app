@@ -60,11 +60,46 @@ class SyncOutboxDataSource {
         );
   }
 
-  Future<List<SyncOutboxRow>> pending({int limit = 100}) {
+  Future<List<SyncOutboxRow>> pending({int limit = 200}) {
     return (_db.select(_db.syncOutbox)
           ..orderBy([(t) => OrderingTerm.asc(t.createdAt)])
           ..limit(limit))
         .get();
+  }
+
+  Future<bool> hasPendingForDocument({
+    required String collection,
+    required String documentId,
+  }) async {
+    final row = await (_db.select(_db.syncOutbox)
+          ..where(
+            (t) =>
+                t.collection.equals(collection) &
+                t.documentId.equals(documentId),
+          )
+          ..limit(1))
+        .getSingleOrNull();
+    return row != null;
+  }
+
+  Future<Set<String>> pendingDocumentIds(String collection) async {
+    final rows = await (_db.select(_db.syncOutbox)
+          ..where((t) => t.collection.equals(collection)))
+        .get();
+    return rows.map((r) => r.documentId).toSet();
+  }
+
+  Future<void> removeForDocument({
+    required String collection,
+    required String documentId,
+  }) async {
+    await (_db.delete(_db.syncOutbox)
+          ..where(
+            (t) =>
+                t.collection.equals(collection) &
+                t.documentId.equals(documentId),
+          ))
+        .go();
   }
 
   Future<void> remove(String id) async {

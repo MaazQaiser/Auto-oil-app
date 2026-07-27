@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
-import '../../../core/constants/app_constants.dart';
 import '../../../core/database/app_database.dart';
+import '../../../core/services/auth_preferences.dart';
 import '../../../core/utils/logger.dart';
 import '../../../features/notifications/data/datasources/reminder_history_datasource.dart';
 import '../../../features/notifications/domain/services/notification_manager.dart';
@@ -13,7 +12,11 @@ import '../../../features/notifications/domain/services/notification_service.dar
 import '../../../features/reminders/data/datasources/reminder_local_datasource.dart';
 import '../../../features/reminders/data/repositories/reminder_repository_impl.dart';
 import '../../../features/reminders/domain/services/reminder_calculator.dart';
+import '../../../features/settings/data/datasources/user_profile_local_datasource.dart';
+import '../../../core/sync/background_sync_runner.dart';
+import '../../../core/sync/sync_outbox_datasource.dart';
 
+const String kBackgroundSyncTask = 'autocare_background_sync';
 const String kDailyReminderTask = 'autocare_daily_reminder_check';
 const String kMorningSummaryTask = 'autocare_morning_summary';
 const String kCleanupTask = 'autocare_cleanup_notifications';
@@ -23,7 +26,7 @@ void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) async {
     try {
       AppLogger.info('Background task started: $taskName');
-      final prefs = await SharedPreferences.getInstance();
+      final authPrefs = await AuthPreferences.create();
       final db = AppDatabase();
       final calculator = const ReminderCalculator();
       final reminderRepo = ReminderRepositoryImpl(
@@ -32,22 +35,31 @@ void callbackDispatcher() {
       final history = ReminderHistoryDataSource(db);
       final notifications = NotificationService();
       await notifications.initialize();
-      final scheduler = NotificationScheduler(notifications, prefs);
+      final scheduler = NotificationScheduler(
+        notifications,
+        SyncOutboxDataSource(db),
+      );
+
+      final String? uid = authPrefs.activeUid;
+      final profile = uid == null
+          ? null
+          : await UserProfileLocalDataSource(db).getByUid(uid);
+
       final manager = NotificationManager(
         reminderRepository: reminderRepo,
         notificationService: notifications,
         scheduler: scheduler,
         permissionService: NotificationPermissionService(),
         historyDataSource: history,
-        notificationsEnabled: () =>
-            prefs.getBool(AppConstants.notificationsEnabledKey) ?? true,
-        weeklySummaryEnabled: () =>
-            prefs.getBool(AppConstants.weeklySummaryEnabledKey) ?? true,
-        monthlySummaryEnabled: () =>
-            prefs.getBool(AppConstants.monthlySummaryEnabledKey) ?? true,
+        notificationsEnabled: () => profile?.notificationsEnabled ?? true,
+        weeklySummaryEnabled: () => profile?.weeklySummaryEnabled ?? true,
+        monthlySummaryEnabled: () => profile?.monthlySummaryEnabled ?? true,
       );
 
       switch (taskName) {
+        case kBackgroundSyncTask:
+          await BackgroundSyncRunner.run();
+          break;
         case kDailyReminderTask:
         case kMorningSummaryTask:
           await manager.runReminderCheck();
@@ -75,6 +87,22 @@ Future<void> initializeBackgroundWork() async {
     AppLogger.info('Workmanager initialized');
   } catch (e, st) {
     AppLogger.error('Workmanager init failed', error: e, stackTrace: st);
+  }
+}
+
+Future<void> registerBackgroundSyncTask() async {
+  if (kIsWeb) return;
+  try {
+    await Workmanager().registerPeriodicTask(
+      kBackgroundSyncTask,
+      kBackgroundSyncTask,
+      frequency: const Duration(minutes: 15),
+      existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
+      constraints: Constraints(networkType: NetworkType.connected),
+    );
+    AppLogger.info('Background sync task registered');
+  } catch (e, st) {
+    AppLogger.error('Failed to register background sync', error: e, stackTrace: st);
   }
 }
 
@@ -124,6 +152,7 @@ Future<void> registerBackgroundTasks({
 Future<void> cancelBackgroundTasks() async {
   if (kIsWeb) return;
   try {
+    await Workmanager().cancelByUniqueName(kBackgroundSyncTask);
     await Workmanager().cancelByUniqueName(kDailyReminderTask);
     await Workmanager().cancelByUniqueName(kMorningSummaryTask);
     await Workmanager().cancelByUniqueName(kCleanupTask);

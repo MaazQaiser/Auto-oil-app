@@ -7847,6 +7847,1782 @@ class SyncMetaCompanion extends UpdateCompanion<SyncMetaRow> {
   }
 }
 
+class $UserProfilesTable extends UserProfiles
+    with TableInfo<$UserProfilesTable, UserProfileRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UserProfilesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uidMeta = const VerificationMeta('uid');
+  @override
+  late final GeneratedColumn<String> uid = GeneratedColumn<String>(
+    'uid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _schemaVersionMeta = const VerificationMeta(
+    'schemaVersion',
+  );
+  @override
+  late final GeneratedColumn<int> schemaVersion = GeneratedColumn<int>(
+    'schema_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(UserProfileSchema.version),
+  );
+  static const VerificationMeta _accountStatusMeta = const VerificationMeta(
+    'accountStatus',
+  );
+  @override
+  late final GeneratedColumn<String> accountStatus = GeneratedColumn<String>(
+    'account_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(AccountStatus.active),
+  );
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+    'email',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('Owner'),
+  );
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  @override
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+    'phone',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workshopNameMeta = const VerificationMeta(
+    'workshopName',
+  );
+  @override
+  late final GeneratedColumn<String> workshopName = GeneratedColumn<String>(
+    'workshop_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('Muzammil Autos'),
+  );
+  static const VerificationMeta _workshopTaglineMeta = const VerificationMeta(
+    'workshopTagline',
+  );
+  @override
+  late final GeneratedColumn<String> workshopTagline = GeneratedColumn<String>(
+    'workshop_tagline',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workshopAddressMeta = const VerificationMeta(
+    'workshopAddress',
+  );
+  @override
+  late final GeneratedColumn<String> workshopAddress = GeneratedColumn<String>(
+    'workshop_address',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workshopPhoneMeta = const VerificationMeta(
+    'workshopPhone',
+  );
+  @override
+  late final GeneratedColumn<String> workshopPhone = GeneratedColumn<String>(
+    'workshop_phone',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workshopEmailMeta = const VerificationMeta(
+    'workshopEmail',
+  );
+  @override
+  late final GeneratedColumn<String> workshopEmail = GeneratedColumn<String>(
+    'workshop_email',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workshopLogoUrlMeta = const VerificationMeta(
+    'workshopLogoUrl',
+  );
+  @override
+  late final GeneratedColumn<String> workshopLogoUrl = GeneratedColumn<String>(
+    'workshop_logo_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _countryCodeMeta = const VerificationMeta(
+    'countryCode',
+  );
+  @override
+  late final GeneratedColumn<String> countryCode = GeneratedColumn<String>(
+    'country_code',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _timezoneMeta = const VerificationMeta(
+    'timezone',
+  );
+  @override
+  late final GeneratedColumn<String> timezone = GeneratedColumn<String>(
+    'timezone',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('Asia/Karachi'),
+  );
+  static const VerificationMeta _invoiceTaxPercentMeta = const VerificationMeta(
+    'invoiceTaxPercent',
+  );
+  @override
+  late final GeneratedColumn<double> invoiceTaxPercent =
+      GeneratedColumn<double>(
+        'invoice_tax_percent',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0.0),
+      );
+  static const VerificationMeta _invoiceCurrencyMeta = const VerificationMeta(
+    'invoiceCurrency',
+  );
+  @override
+  late final GeneratedColumn<String> invoiceCurrency = GeneratedColumn<String>(
+    'invoice_currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('USD'),
+  );
+  static const VerificationMeta _invoiceCurrencySymbolMeta =
+      const VerificationMeta('invoiceCurrencySymbol');
+  @override
+  late final GeneratedColumn<String> invoiceCurrencySymbol =
+      GeneratedColumn<String>(
+        'invoice_currency_symbol',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('\$'),
+      );
+  static const VerificationMeta _invoicePrefixMeta = const VerificationMeta(
+    'invoicePrefix',
+  );
+  @override
+  late final GeneratedColumn<String> invoicePrefix = GeneratedColumn<String>(
+    'invoice_prefix',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('INV'),
+  );
+  static const VerificationMeta _invoiceNextNumberMeta = const VerificationMeta(
+    'invoiceNextNumber',
+  );
+  @override
+  late final GeneratedColumn<int> invoiceNextNumber = GeneratedColumn<int>(
+    'invoice_next_number',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _themeModeMeta = const VerificationMeta(
+    'themeMode',
+  );
+  @override
+  late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
+    'theme_mode',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('system'),
+  );
+  static const VerificationMeta _languageMeta = const VerificationMeta(
+    'language',
+  );
+  @override
+  late final GeneratedColumn<String> language = GeneratedColumn<String>(
+    'language',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('en'),
+  );
+  static const VerificationMeta _notificationsEnabledMeta =
+      const VerificationMeta('notificationsEnabled');
+  @override
+  late final GeneratedColumn<bool> notificationsEnabled = GeneratedColumn<bool>(
+    'notifications_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("notifications_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _dailyReminderHourMeta = const VerificationMeta(
+    'dailyReminderHour',
+  );
+  @override
+  late final GeneratedColumn<int> dailyReminderHour = GeneratedColumn<int>(
+    'daily_reminder_hour',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(8),
+  );
+  static const VerificationMeta _dailyReminderMinuteMeta =
+      const VerificationMeta('dailyReminderMinute');
+  @override
+  late final GeneratedColumn<int> dailyReminderMinute = GeneratedColumn<int>(
+    'daily_reminder_minute',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _weeklySummaryEnabledMeta =
+      const VerificationMeta('weeklySummaryEnabled');
+  @override
+  late final GeneratedColumn<bool> weeklySummaryEnabled = GeneratedColumn<bool>(
+    'weekly_summary_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("weekly_summary_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _monthlySummaryEnabledMeta =
+      const VerificationMeta('monthlySummaryEnabled');
+  @override
+  late final GeneratedColumn<bool> monthlySummaryEnabled =
+      GeneratedColumn<bool>(
+        'monthly_summary_enabled',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("monthly_summary_enabled" IN (0, 1))',
+        ),
+        defaultValue: const Constant(true),
+      );
+  static const VerificationMeta _whatsappShortcutEnabledMeta =
+      const VerificationMeta('whatsappShortcutEnabled');
+  @override
+  late final GeneratedColumn<bool> whatsappShortcutEnabled =
+      GeneratedColumn<bool>(
+        'whatsapp_shortcut_enabled',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("whatsapp_shortcut_enabled" IN (0, 1))',
+        ),
+        defaultValue: const Constant(true),
+      );
+  static const VerificationMeta _defaultMessageTemplateIdMeta =
+      const VerificationMeta('defaultMessageTemplateId');
+  @override
+  late final GeneratedColumn<String> defaultMessageTemplateId =
+      GeneratedColumn<String>(
+        'default_message_template_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _extraJsonMeta = const VerificationMeta(
+    'extraJson',
+  );
+  @override
+  late final GeneratedColumn<String> extraJson = GeneratedColumn<String>(
+    'extra_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    uid,
+    schemaVersion,
+    accountStatus,
+    email,
+    displayName,
+    phone,
+    workshopName,
+    workshopTagline,
+    workshopAddress,
+    workshopPhone,
+    workshopEmail,
+    workshopLogoUrl,
+    countryCode,
+    timezone,
+    invoiceTaxPercent,
+    invoiceCurrency,
+    invoiceCurrencySymbol,
+    invoicePrefix,
+    invoiceNextNumber,
+    themeMode,
+    language,
+    notificationsEnabled,
+    dailyReminderHour,
+    dailyReminderMinute,
+    weeklySummaryEnabled,
+    monthlySummaryEnabled,
+    whatsappShortcutEnabled,
+    defaultMessageTemplateId,
+    extraJson,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'user_profiles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<UserProfileRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('uid')) {
+      context.handle(
+        _uidMeta,
+        uid.isAcceptableOrUnknown(data['uid']!, _uidMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_uidMeta);
+    }
+    if (data.containsKey('schema_version')) {
+      context.handle(
+        _schemaVersionMeta,
+        schemaVersion.isAcceptableOrUnknown(
+          data['schema_version']!,
+          _schemaVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('account_status')) {
+      context.handle(
+        _accountStatusMeta,
+        accountStatus.isAcceptableOrUnknown(
+          data['account_status']!,
+          _accountStatusMeta,
+        ),
+      );
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('phone')) {
+      context.handle(
+        _phoneMeta,
+        phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta),
+      );
+    }
+    if (data.containsKey('workshop_name')) {
+      context.handle(
+        _workshopNameMeta,
+        workshopName.isAcceptableOrUnknown(
+          data['workshop_name']!,
+          _workshopNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('workshop_tagline')) {
+      context.handle(
+        _workshopTaglineMeta,
+        workshopTagline.isAcceptableOrUnknown(
+          data['workshop_tagline']!,
+          _workshopTaglineMeta,
+        ),
+      );
+    }
+    if (data.containsKey('workshop_address')) {
+      context.handle(
+        _workshopAddressMeta,
+        workshopAddress.isAcceptableOrUnknown(
+          data['workshop_address']!,
+          _workshopAddressMeta,
+        ),
+      );
+    }
+    if (data.containsKey('workshop_phone')) {
+      context.handle(
+        _workshopPhoneMeta,
+        workshopPhone.isAcceptableOrUnknown(
+          data['workshop_phone']!,
+          _workshopPhoneMeta,
+        ),
+      );
+    }
+    if (data.containsKey('workshop_email')) {
+      context.handle(
+        _workshopEmailMeta,
+        workshopEmail.isAcceptableOrUnknown(
+          data['workshop_email']!,
+          _workshopEmailMeta,
+        ),
+      );
+    }
+    if (data.containsKey('workshop_logo_url')) {
+      context.handle(
+        _workshopLogoUrlMeta,
+        workshopLogoUrl.isAcceptableOrUnknown(
+          data['workshop_logo_url']!,
+          _workshopLogoUrlMeta,
+        ),
+      );
+    }
+    if (data.containsKey('country_code')) {
+      context.handle(
+        _countryCodeMeta,
+        countryCode.isAcceptableOrUnknown(
+          data['country_code']!,
+          _countryCodeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('timezone')) {
+      context.handle(
+        _timezoneMeta,
+        timezone.isAcceptableOrUnknown(data['timezone']!, _timezoneMeta),
+      );
+    }
+    if (data.containsKey('invoice_tax_percent')) {
+      context.handle(
+        _invoiceTaxPercentMeta,
+        invoiceTaxPercent.isAcceptableOrUnknown(
+          data['invoice_tax_percent']!,
+          _invoiceTaxPercentMeta,
+        ),
+      );
+    }
+    if (data.containsKey('invoice_currency')) {
+      context.handle(
+        _invoiceCurrencyMeta,
+        invoiceCurrency.isAcceptableOrUnknown(
+          data['invoice_currency']!,
+          _invoiceCurrencyMeta,
+        ),
+      );
+    }
+    if (data.containsKey('invoice_currency_symbol')) {
+      context.handle(
+        _invoiceCurrencySymbolMeta,
+        invoiceCurrencySymbol.isAcceptableOrUnknown(
+          data['invoice_currency_symbol']!,
+          _invoiceCurrencySymbolMeta,
+        ),
+      );
+    }
+    if (data.containsKey('invoice_prefix')) {
+      context.handle(
+        _invoicePrefixMeta,
+        invoicePrefix.isAcceptableOrUnknown(
+          data['invoice_prefix']!,
+          _invoicePrefixMeta,
+        ),
+      );
+    }
+    if (data.containsKey('invoice_next_number')) {
+      context.handle(
+        _invoiceNextNumberMeta,
+        invoiceNextNumber.isAcceptableOrUnknown(
+          data['invoice_next_number']!,
+          _invoiceNextNumberMeta,
+        ),
+      );
+    }
+    if (data.containsKey('theme_mode')) {
+      context.handle(
+        _themeModeMeta,
+        themeMode.isAcceptableOrUnknown(data['theme_mode']!, _themeModeMeta),
+      );
+    }
+    if (data.containsKey('language')) {
+      context.handle(
+        _languageMeta,
+        language.isAcceptableOrUnknown(data['language']!, _languageMeta),
+      );
+    }
+    if (data.containsKey('notifications_enabled')) {
+      context.handle(
+        _notificationsEnabledMeta,
+        notificationsEnabled.isAcceptableOrUnknown(
+          data['notifications_enabled']!,
+          _notificationsEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('daily_reminder_hour')) {
+      context.handle(
+        _dailyReminderHourMeta,
+        dailyReminderHour.isAcceptableOrUnknown(
+          data['daily_reminder_hour']!,
+          _dailyReminderHourMeta,
+        ),
+      );
+    }
+    if (data.containsKey('daily_reminder_minute')) {
+      context.handle(
+        _dailyReminderMinuteMeta,
+        dailyReminderMinute.isAcceptableOrUnknown(
+          data['daily_reminder_minute']!,
+          _dailyReminderMinuteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('weekly_summary_enabled')) {
+      context.handle(
+        _weeklySummaryEnabledMeta,
+        weeklySummaryEnabled.isAcceptableOrUnknown(
+          data['weekly_summary_enabled']!,
+          _weeklySummaryEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('monthly_summary_enabled')) {
+      context.handle(
+        _monthlySummaryEnabledMeta,
+        monthlySummaryEnabled.isAcceptableOrUnknown(
+          data['monthly_summary_enabled']!,
+          _monthlySummaryEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('whatsapp_shortcut_enabled')) {
+      context.handle(
+        _whatsappShortcutEnabledMeta,
+        whatsappShortcutEnabled.isAcceptableOrUnknown(
+          data['whatsapp_shortcut_enabled']!,
+          _whatsappShortcutEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('default_message_template_id')) {
+      context.handle(
+        _defaultMessageTemplateIdMeta,
+        defaultMessageTemplateId.isAcceptableOrUnknown(
+          data['default_message_template_id']!,
+          _defaultMessageTemplateIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('extra_json')) {
+      context.handle(
+        _extraJsonMeta,
+        extraJson.isAcceptableOrUnknown(data['extra_json']!, _extraJsonMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {uid};
+  @override
+  UserProfileRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return UserProfileRow(
+      uid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uid'],
+      )!,
+      schemaVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}schema_version'],
+      )!,
+      accountStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}account_status'],
+      )!,
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      )!,
+      phone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}phone'],
+      ),
+      workshopName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workshop_name'],
+      )!,
+      workshopTagline: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workshop_tagline'],
+      ),
+      workshopAddress: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workshop_address'],
+      ),
+      workshopPhone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workshop_phone'],
+      ),
+      workshopEmail: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workshop_email'],
+      ),
+      workshopLogoUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workshop_logo_url'],
+      ),
+      countryCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}country_code'],
+      ),
+      timezone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}timezone'],
+      )!,
+      invoiceTaxPercent: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}invoice_tax_percent'],
+      )!,
+      invoiceCurrency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}invoice_currency'],
+      )!,
+      invoiceCurrencySymbol: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}invoice_currency_symbol'],
+      )!,
+      invoicePrefix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}invoice_prefix'],
+      )!,
+      invoiceNextNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}invoice_next_number'],
+      )!,
+      themeMode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}theme_mode'],
+      )!,
+      language: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language'],
+      )!,
+      notificationsEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}notifications_enabled'],
+      )!,
+      dailyReminderHour: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}daily_reminder_hour'],
+      )!,
+      dailyReminderMinute: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}daily_reminder_minute'],
+      )!,
+      weeklySummaryEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}weekly_summary_enabled'],
+      )!,
+      monthlySummaryEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}monthly_summary_enabled'],
+      )!,
+      whatsappShortcutEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}whatsapp_shortcut_enabled'],
+      )!,
+      defaultMessageTemplateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}default_message_template_id'],
+      ),
+      extraJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}extra_json'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $UserProfilesTable createAlias(String alias) {
+    return $UserProfilesTable(attachedDatabase, alias);
+  }
+}
+
+class UserProfileRow extends DataClass implements Insertable<UserProfileRow> {
+  final String uid;
+
+  /// Profile document schema version — see [UserProfileSchema.version].
+  final int schemaVersion;
+
+  /// active | suspended | pending_setup
+  final String accountStatus;
+  final String email;
+  final String displayName;
+  final String? phone;
+  final String workshopName;
+  final String? workshopTagline;
+  final String? workshopAddress;
+  final String? workshopPhone;
+  final String? workshopEmail;
+
+  /// Remote URL or local asset path for workshop branding.
+  final String? workshopLogoUrl;
+
+  /// ISO 3166-1 alpha-2, e.g. PK, US.
+  final String? countryCode;
+
+  /// IANA timezone, e.g. Asia/Karachi — used for reminders and reports.
+  final String timezone;
+  final double invoiceTaxPercent;
+  final String invoiceCurrency;
+  final String invoiceCurrencySymbol;
+  final String invoicePrefix;
+  final int invoiceNextNumber;
+
+  /// light | dark | system
+  final String themeMode;
+  final String language;
+  final bool notificationsEnabled;
+  final int dailyReminderHour;
+  final int dailyReminderMinute;
+  final bool weeklySummaryEnabled;
+  final bool monthlySummaryEnabled;
+  final bool whatsappShortcutEnabled;
+  final String? defaultMessageTemplateId;
+
+  /// Forward-compatible JSON blob for fields not yet in the typed schema.
+  final String? extraJson;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const UserProfileRow({
+    required this.uid,
+    required this.schemaVersion,
+    required this.accountStatus,
+    required this.email,
+    required this.displayName,
+    this.phone,
+    required this.workshopName,
+    this.workshopTagline,
+    this.workshopAddress,
+    this.workshopPhone,
+    this.workshopEmail,
+    this.workshopLogoUrl,
+    this.countryCode,
+    required this.timezone,
+    required this.invoiceTaxPercent,
+    required this.invoiceCurrency,
+    required this.invoiceCurrencySymbol,
+    required this.invoicePrefix,
+    required this.invoiceNextNumber,
+    required this.themeMode,
+    required this.language,
+    required this.notificationsEnabled,
+    required this.dailyReminderHour,
+    required this.dailyReminderMinute,
+    required this.weeklySummaryEnabled,
+    required this.monthlySummaryEnabled,
+    required this.whatsappShortcutEnabled,
+    this.defaultMessageTemplateId,
+    this.extraJson,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['uid'] = Variable<String>(uid);
+    map['schema_version'] = Variable<int>(schemaVersion);
+    map['account_status'] = Variable<String>(accountStatus);
+    map['email'] = Variable<String>(email);
+    map['display_name'] = Variable<String>(displayName);
+    if (!nullToAbsent || phone != null) {
+      map['phone'] = Variable<String>(phone);
+    }
+    map['workshop_name'] = Variable<String>(workshopName);
+    if (!nullToAbsent || workshopTagline != null) {
+      map['workshop_tagline'] = Variable<String>(workshopTagline);
+    }
+    if (!nullToAbsent || workshopAddress != null) {
+      map['workshop_address'] = Variable<String>(workshopAddress);
+    }
+    if (!nullToAbsent || workshopPhone != null) {
+      map['workshop_phone'] = Variable<String>(workshopPhone);
+    }
+    if (!nullToAbsent || workshopEmail != null) {
+      map['workshop_email'] = Variable<String>(workshopEmail);
+    }
+    if (!nullToAbsent || workshopLogoUrl != null) {
+      map['workshop_logo_url'] = Variable<String>(workshopLogoUrl);
+    }
+    if (!nullToAbsent || countryCode != null) {
+      map['country_code'] = Variable<String>(countryCode);
+    }
+    map['timezone'] = Variable<String>(timezone);
+    map['invoice_tax_percent'] = Variable<double>(invoiceTaxPercent);
+    map['invoice_currency'] = Variable<String>(invoiceCurrency);
+    map['invoice_currency_symbol'] = Variable<String>(invoiceCurrencySymbol);
+    map['invoice_prefix'] = Variable<String>(invoicePrefix);
+    map['invoice_next_number'] = Variable<int>(invoiceNextNumber);
+    map['theme_mode'] = Variable<String>(themeMode);
+    map['language'] = Variable<String>(language);
+    map['notifications_enabled'] = Variable<bool>(notificationsEnabled);
+    map['daily_reminder_hour'] = Variable<int>(dailyReminderHour);
+    map['daily_reminder_minute'] = Variable<int>(dailyReminderMinute);
+    map['weekly_summary_enabled'] = Variable<bool>(weeklySummaryEnabled);
+    map['monthly_summary_enabled'] = Variable<bool>(monthlySummaryEnabled);
+    map['whatsapp_shortcut_enabled'] = Variable<bool>(whatsappShortcutEnabled);
+    if (!nullToAbsent || defaultMessageTemplateId != null) {
+      map['default_message_template_id'] = Variable<String>(
+        defaultMessageTemplateId,
+      );
+    }
+    if (!nullToAbsent || extraJson != null) {
+      map['extra_json'] = Variable<String>(extraJson);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  UserProfilesCompanion toCompanion(bool nullToAbsent) {
+    return UserProfilesCompanion(
+      uid: Value(uid),
+      schemaVersion: Value(schemaVersion),
+      accountStatus: Value(accountStatus),
+      email: Value(email),
+      displayName: Value(displayName),
+      phone: phone == null && nullToAbsent
+          ? const Value.absent()
+          : Value(phone),
+      workshopName: Value(workshopName),
+      workshopTagline: workshopTagline == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workshopTagline),
+      workshopAddress: workshopAddress == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workshopAddress),
+      workshopPhone: workshopPhone == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workshopPhone),
+      workshopEmail: workshopEmail == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workshopEmail),
+      workshopLogoUrl: workshopLogoUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workshopLogoUrl),
+      countryCode: countryCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(countryCode),
+      timezone: Value(timezone),
+      invoiceTaxPercent: Value(invoiceTaxPercent),
+      invoiceCurrency: Value(invoiceCurrency),
+      invoiceCurrencySymbol: Value(invoiceCurrencySymbol),
+      invoicePrefix: Value(invoicePrefix),
+      invoiceNextNumber: Value(invoiceNextNumber),
+      themeMode: Value(themeMode),
+      language: Value(language),
+      notificationsEnabled: Value(notificationsEnabled),
+      dailyReminderHour: Value(dailyReminderHour),
+      dailyReminderMinute: Value(dailyReminderMinute),
+      weeklySummaryEnabled: Value(weeklySummaryEnabled),
+      monthlySummaryEnabled: Value(monthlySummaryEnabled),
+      whatsappShortcutEnabled: Value(whatsappShortcutEnabled),
+      defaultMessageTemplateId: defaultMessageTemplateId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(defaultMessageTemplateId),
+      extraJson: extraJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(extraJson),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory UserProfileRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return UserProfileRow(
+      uid: serializer.fromJson<String>(json['uid']),
+      schemaVersion: serializer.fromJson<int>(json['schemaVersion']),
+      accountStatus: serializer.fromJson<String>(json['accountStatus']),
+      email: serializer.fromJson<String>(json['email']),
+      displayName: serializer.fromJson<String>(json['displayName']),
+      phone: serializer.fromJson<String?>(json['phone']),
+      workshopName: serializer.fromJson<String>(json['workshopName']),
+      workshopTagline: serializer.fromJson<String?>(json['workshopTagline']),
+      workshopAddress: serializer.fromJson<String?>(json['workshopAddress']),
+      workshopPhone: serializer.fromJson<String?>(json['workshopPhone']),
+      workshopEmail: serializer.fromJson<String?>(json['workshopEmail']),
+      workshopLogoUrl: serializer.fromJson<String?>(json['workshopLogoUrl']),
+      countryCode: serializer.fromJson<String?>(json['countryCode']),
+      timezone: serializer.fromJson<String>(json['timezone']),
+      invoiceTaxPercent: serializer.fromJson<double>(json['invoiceTaxPercent']),
+      invoiceCurrency: serializer.fromJson<String>(json['invoiceCurrency']),
+      invoiceCurrencySymbol: serializer.fromJson<String>(
+        json['invoiceCurrencySymbol'],
+      ),
+      invoicePrefix: serializer.fromJson<String>(json['invoicePrefix']),
+      invoiceNextNumber: serializer.fromJson<int>(json['invoiceNextNumber']),
+      themeMode: serializer.fromJson<String>(json['themeMode']),
+      language: serializer.fromJson<String>(json['language']),
+      notificationsEnabled: serializer.fromJson<bool>(
+        json['notificationsEnabled'],
+      ),
+      dailyReminderHour: serializer.fromJson<int>(json['dailyReminderHour']),
+      dailyReminderMinute: serializer.fromJson<int>(
+        json['dailyReminderMinute'],
+      ),
+      weeklySummaryEnabled: serializer.fromJson<bool>(
+        json['weeklySummaryEnabled'],
+      ),
+      monthlySummaryEnabled: serializer.fromJson<bool>(
+        json['monthlySummaryEnabled'],
+      ),
+      whatsappShortcutEnabled: serializer.fromJson<bool>(
+        json['whatsappShortcutEnabled'],
+      ),
+      defaultMessageTemplateId: serializer.fromJson<String?>(
+        json['defaultMessageTemplateId'],
+      ),
+      extraJson: serializer.fromJson<String?>(json['extraJson']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'uid': serializer.toJson<String>(uid),
+      'schemaVersion': serializer.toJson<int>(schemaVersion),
+      'accountStatus': serializer.toJson<String>(accountStatus),
+      'email': serializer.toJson<String>(email),
+      'displayName': serializer.toJson<String>(displayName),
+      'phone': serializer.toJson<String?>(phone),
+      'workshopName': serializer.toJson<String>(workshopName),
+      'workshopTagline': serializer.toJson<String?>(workshopTagline),
+      'workshopAddress': serializer.toJson<String?>(workshopAddress),
+      'workshopPhone': serializer.toJson<String?>(workshopPhone),
+      'workshopEmail': serializer.toJson<String?>(workshopEmail),
+      'workshopLogoUrl': serializer.toJson<String?>(workshopLogoUrl),
+      'countryCode': serializer.toJson<String?>(countryCode),
+      'timezone': serializer.toJson<String>(timezone),
+      'invoiceTaxPercent': serializer.toJson<double>(invoiceTaxPercent),
+      'invoiceCurrency': serializer.toJson<String>(invoiceCurrency),
+      'invoiceCurrencySymbol': serializer.toJson<String>(invoiceCurrencySymbol),
+      'invoicePrefix': serializer.toJson<String>(invoicePrefix),
+      'invoiceNextNumber': serializer.toJson<int>(invoiceNextNumber),
+      'themeMode': serializer.toJson<String>(themeMode),
+      'language': serializer.toJson<String>(language),
+      'notificationsEnabled': serializer.toJson<bool>(notificationsEnabled),
+      'dailyReminderHour': serializer.toJson<int>(dailyReminderHour),
+      'dailyReminderMinute': serializer.toJson<int>(dailyReminderMinute),
+      'weeklySummaryEnabled': serializer.toJson<bool>(weeklySummaryEnabled),
+      'monthlySummaryEnabled': serializer.toJson<bool>(monthlySummaryEnabled),
+      'whatsappShortcutEnabled': serializer.toJson<bool>(
+        whatsappShortcutEnabled,
+      ),
+      'defaultMessageTemplateId': serializer.toJson<String?>(
+        defaultMessageTemplateId,
+      ),
+      'extraJson': serializer.toJson<String?>(extraJson),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  UserProfileRow copyWith({
+    String? uid,
+    int? schemaVersion,
+    String? accountStatus,
+    String? email,
+    String? displayName,
+    Value<String?> phone = const Value.absent(),
+    String? workshopName,
+    Value<String?> workshopTagline = const Value.absent(),
+    Value<String?> workshopAddress = const Value.absent(),
+    Value<String?> workshopPhone = const Value.absent(),
+    Value<String?> workshopEmail = const Value.absent(),
+    Value<String?> workshopLogoUrl = const Value.absent(),
+    Value<String?> countryCode = const Value.absent(),
+    String? timezone,
+    double? invoiceTaxPercent,
+    String? invoiceCurrency,
+    String? invoiceCurrencySymbol,
+    String? invoicePrefix,
+    int? invoiceNextNumber,
+    String? themeMode,
+    String? language,
+    bool? notificationsEnabled,
+    int? dailyReminderHour,
+    int? dailyReminderMinute,
+    bool? weeklySummaryEnabled,
+    bool? monthlySummaryEnabled,
+    bool? whatsappShortcutEnabled,
+    Value<String?> defaultMessageTemplateId = const Value.absent(),
+    Value<String?> extraJson = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => UserProfileRow(
+    uid: uid ?? this.uid,
+    schemaVersion: schemaVersion ?? this.schemaVersion,
+    accountStatus: accountStatus ?? this.accountStatus,
+    email: email ?? this.email,
+    displayName: displayName ?? this.displayName,
+    phone: phone.present ? phone.value : this.phone,
+    workshopName: workshopName ?? this.workshopName,
+    workshopTagline: workshopTagline.present
+        ? workshopTagline.value
+        : this.workshopTagline,
+    workshopAddress: workshopAddress.present
+        ? workshopAddress.value
+        : this.workshopAddress,
+    workshopPhone: workshopPhone.present
+        ? workshopPhone.value
+        : this.workshopPhone,
+    workshopEmail: workshopEmail.present
+        ? workshopEmail.value
+        : this.workshopEmail,
+    workshopLogoUrl: workshopLogoUrl.present
+        ? workshopLogoUrl.value
+        : this.workshopLogoUrl,
+    countryCode: countryCode.present ? countryCode.value : this.countryCode,
+    timezone: timezone ?? this.timezone,
+    invoiceTaxPercent: invoiceTaxPercent ?? this.invoiceTaxPercent,
+    invoiceCurrency: invoiceCurrency ?? this.invoiceCurrency,
+    invoiceCurrencySymbol: invoiceCurrencySymbol ?? this.invoiceCurrencySymbol,
+    invoicePrefix: invoicePrefix ?? this.invoicePrefix,
+    invoiceNextNumber: invoiceNextNumber ?? this.invoiceNextNumber,
+    themeMode: themeMode ?? this.themeMode,
+    language: language ?? this.language,
+    notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+    dailyReminderHour: dailyReminderHour ?? this.dailyReminderHour,
+    dailyReminderMinute: dailyReminderMinute ?? this.dailyReminderMinute,
+    weeklySummaryEnabled: weeklySummaryEnabled ?? this.weeklySummaryEnabled,
+    monthlySummaryEnabled: monthlySummaryEnabled ?? this.monthlySummaryEnabled,
+    whatsappShortcutEnabled:
+        whatsappShortcutEnabled ?? this.whatsappShortcutEnabled,
+    defaultMessageTemplateId: defaultMessageTemplateId.present
+        ? defaultMessageTemplateId.value
+        : this.defaultMessageTemplateId,
+    extraJson: extraJson.present ? extraJson.value : this.extraJson,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  UserProfileRow copyWithCompanion(UserProfilesCompanion data) {
+    return UserProfileRow(
+      uid: data.uid.present ? data.uid.value : this.uid,
+      schemaVersion: data.schemaVersion.present
+          ? data.schemaVersion.value
+          : this.schemaVersion,
+      accountStatus: data.accountStatus.present
+          ? data.accountStatus.value
+          : this.accountStatus,
+      email: data.email.present ? data.email.value : this.email,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      phone: data.phone.present ? data.phone.value : this.phone,
+      workshopName: data.workshopName.present
+          ? data.workshopName.value
+          : this.workshopName,
+      workshopTagline: data.workshopTagline.present
+          ? data.workshopTagline.value
+          : this.workshopTagline,
+      workshopAddress: data.workshopAddress.present
+          ? data.workshopAddress.value
+          : this.workshopAddress,
+      workshopPhone: data.workshopPhone.present
+          ? data.workshopPhone.value
+          : this.workshopPhone,
+      workshopEmail: data.workshopEmail.present
+          ? data.workshopEmail.value
+          : this.workshopEmail,
+      workshopLogoUrl: data.workshopLogoUrl.present
+          ? data.workshopLogoUrl.value
+          : this.workshopLogoUrl,
+      countryCode: data.countryCode.present
+          ? data.countryCode.value
+          : this.countryCode,
+      timezone: data.timezone.present ? data.timezone.value : this.timezone,
+      invoiceTaxPercent: data.invoiceTaxPercent.present
+          ? data.invoiceTaxPercent.value
+          : this.invoiceTaxPercent,
+      invoiceCurrency: data.invoiceCurrency.present
+          ? data.invoiceCurrency.value
+          : this.invoiceCurrency,
+      invoiceCurrencySymbol: data.invoiceCurrencySymbol.present
+          ? data.invoiceCurrencySymbol.value
+          : this.invoiceCurrencySymbol,
+      invoicePrefix: data.invoicePrefix.present
+          ? data.invoicePrefix.value
+          : this.invoicePrefix,
+      invoiceNextNumber: data.invoiceNextNumber.present
+          ? data.invoiceNextNumber.value
+          : this.invoiceNextNumber,
+      themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
+      language: data.language.present ? data.language.value : this.language,
+      notificationsEnabled: data.notificationsEnabled.present
+          ? data.notificationsEnabled.value
+          : this.notificationsEnabled,
+      dailyReminderHour: data.dailyReminderHour.present
+          ? data.dailyReminderHour.value
+          : this.dailyReminderHour,
+      dailyReminderMinute: data.dailyReminderMinute.present
+          ? data.dailyReminderMinute.value
+          : this.dailyReminderMinute,
+      weeklySummaryEnabled: data.weeklySummaryEnabled.present
+          ? data.weeklySummaryEnabled.value
+          : this.weeklySummaryEnabled,
+      monthlySummaryEnabled: data.monthlySummaryEnabled.present
+          ? data.monthlySummaryEnabled.value
+          : this.monthlySummaryEnabled,
+      whatsappShortcutEnabled: data.whatsappShortcutEnabled.present
+          ? data.whatsappShortcutEnabled.value
+          : this.whatsappShortcutEnabled,
+      defaultMessageTemplateId: data.defaultMessageTemplateId.present
+          ? data.defaultMessageTemplateId.value
+          : this.defaultMessageTemplateId,
+      extraJson: data.extraJson.present ? data.extraJson.value : this.extraJson,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserProfileRow(')
+          ..write('uid: $uid, ')
+          ..write('schemaVersion: $schemaVersion, ')
+          ..write('accountStatus: $accountStatus, ')
+          ..write('email: $email, ')
+          ..write('displayName: $displayName, ')
+          ..write('phone: $phone, ')
+          ..write('workshopName: $workshopName, ')
+          ..write('workshopTagline: $workshopTagline, ')
+          ..write('workshopAddress: $workshopAddress, ')
+          ..write('workshopPhone: $workshopPhone, ')
+          ..write('workshopEmail: $workshopEmail, ')
+          ..write('workshopLogoUrl: $workshopLogoUrl, ')
+          ..write('countryCode: $countryCode, ')
+          ..write('timezone: $timezone, ')
+          ..write('invoiceTaxPercent: $invoiceTaxPercent, ')
+          ..write('invoiceCurrency: $invoiceCurrency, ')
+          ..write('invoiceCurrencySymbol: $invoiceCurrencySymbol, ')
+          ..write('invoicePrefix: $invoicePrefix, ')
+          ..write('invoiceNextNumber: $invoiceNextNumber, ')
+          ..write('themeMode: $themeMode, ')
+          ..write('language: $language, ')
+          ..write('notificationsEnabled: $notificationsEnabled, ')
+          ..write('dailyReminderHour: $dailyReminderHour, ')
+          ..write('dailyReminderMinute: $dailyReminderMinute, ')
+          ..write('weeklySummaryEnabled: $weeklySummaryEnabled, ')
+          ..write('monthlySummaryEnabled: $monthlySummaryEnabled, ')
+          ..write('whatsappShortcutEnabled: $whatsappShortcutEnabled, ')
+          ..write('defaultMessageTemplateId: $defaultMessageTemplateId, ')
+          ..write('extraJson: $extraJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    uid,
+    schemaVersion,
+    accountStatus,
+    email,
+    displayName,
+    phone,
+    workshopName,
+    workshopTagline,
+    workshopAddress,
+    workshopPhone,
+    workshopEmail,
+    workshopLogoUrl,
+    countryCode,
+    timezone,
+    invoiceTaxPercent,
+    invoiceCurrency,
+    invoiceCurrencySymbol,
+    invoicePrefix,
+    invoiceNextNumber,
+    themeMode,
+    language,
+    notificationsEnabled,
+    dailyReminderHour,
+    dailyReminderMinute,
+    weeklySummaryEnabled,
+    monthlySummaryEnabled,
+    whatsappShortcutEnabled,
+    defaultMessageTemplateId,
+    extraJson,
+    createdAt,
+    updatedAt,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserProfileRow &&
+          other.uid == this.uid &&
+          other.schemaVersion == this.schemaVersion &&
+          other.accountStatus == this.accountStatus &&
+          other.email == this.email &&
+          other.displayName == this.displayName &&
+          other.phone == this.phone &&
+          other.workshopName == this.workshopName &&
+          other.workshopTagline == this.workshopTagline &&
+          other.workshopAddress == this.workshopAddress &&
+          other.workshopPhone == this.workshopPhone &&
+          other.workshopEmail == this.workshopEmail &&
+          other.workshopLogoUrl == this.workshopLogoUrl &&
+          other.countryCode == this.countryCode &&
+          other.timezone == this.timezone &&
+          other.invoiceTaxPercent == this.invoiceTaxPercent &&
+          other.invoiceCurrency == this.invoiceCurrency &&
+          other.invoiceCurrencySymbol == this.invoiceCurrencySymbol &&
+          other.invoicePrefix == this.invoicePrefix &&
+          other.invoiceNextNumber == this.invoiceNextNumber &&
+          other.themeMode == this.themeMode &&
+          other.language == this.language &&
+          other.notificationsEnabled == this.notificationsEnabled &&
+          other.dailyReminderHour == this.dailyReminderHour &&
+          other.dailyReminderMinute == this.dailyReminderMinute &&
+          other.weeklySummaryEnabled == this.weeklySummaryEnabled &&
+          other.monthlySummaryEnabled == this.monthlySummaryEnabled &&
+          other.whatsappShortcutEnabled == this.whatsappShortcutEnabled &&
+          other.defaultMessageTemplateId == this.defaultMessageTemplateId &&
+          other.extraJson == this.extraJson &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class UserProfilesCompanion extends UpdateCompanion<UserProfileRow> {
+  final Value<String> uid;
+  final Value<int> schemaVersion;
+  final Value<String> accountStatus;
+  final Value<String> email;
+  final Value<String> displayName;
+  final Value<String?> phone;
+  final Value<String> workshopName;
+  final Value<String?> workshopTagline;
+  final Value<String?> workshopAddress;
+  final Value<String?> workshopPhone;
+  final Value<String?> workshopEmail;
+  final Value<String?> workshopLogoUrl;
+  final Value<String?> countryCode;
+  final Value<String> timezone;
+  final Value<double> invoiceTaxPercent;
+  final Value<String> invoiceCurrency;
+  final Value<String> invoiceCurrencySymbol;
+  final Value<String> invoicePrefix;
+  final Value<int> invoiceNextNumber;
+  final Value<String> themeMode;
+  final Value<String> language;
+  final Value<bool> notificationsEnabled;
+  final Value<int> dailyReminderHour;
+  final Value<int> dailyReminderMinute;
+  final Value<bool> weeklySummaryEnabled;
+  final Value<bool> monthlySummaryEnabled;
+  final Value<bool> whatsappShortcutEnabled;
+  final Value<String?> defaultMessageTemplateId;
+  final Value<String?> extraJson;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const UserProfilesCompanion({
+    this.uid = const Value.absent(),
+    this.schemaVersion = const Value.absent(),
+    this.accountStatus = const Value.absent(),
+    this.email = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.workshopName = const Value.absent(),
+    this.workshopTagline = const Value.absent(),
+    this.workshopAddress = const Value.absent(),
+    this.workshopPhone = const Value.absent(),
+    this.workshopEmail = const Value.absent(),
+    this.workshopLogoUrl = const Value.absent(),
+    this.countryCode = const Value.absent(),
+    this.timezone = const Value.absent(),
+    this.invoiceTaxPercent = const Value.absent(),
+    this.invoiceCurrency = const Value.absent(),
+    this.invoiceCurrencySymbol = const Value.absent(),
+    this.invoicePrefix = const Value.absent(),
+    this.invoiceNextNumber = const Value.absent(),
+    this.themeMode = const Value.absent(),
+    this.language = const Value.absent(),
+    this.notificationsEnabled = const Value.absent(),
+    this.dailyReminderHour = const Value.absent(),
+    this.dailyReminderMinute = const Value.absent(),
+    this.weeklySummaryEnabled = const Value.absent(),
+    this.monthlySummaryEnabled = const Value.absent(),
+    this.whatsappShortcutEnabled = const Value.absent(),
+    this.defaultMessageTemplateId = const Value.absent(),
+    this.extraJson = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  UserProfilesCompanion.insert({
+    required String uid,
+    this.schemaVersion = const Value.absent(),
+    this.accountStatus = const Value.absent(),
+    required String email,
+    this.displayName = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.workshopName = const Value.absent(),
+    this.workshopTagline = const Value.absent(),
+    this.workshopAddress = const Value.absent(),
+    this.workshopPhone = const Value.absent(),
+    this.workshopEmail = const Value.absent(),
+    this.workshopLogoUrl = const Value.absent(),
+    this.countryCode = const Value.absent(),
+    this.timezone = const Value.absent(),
+    this.invoiceTaxPercent = const Value.absent(),
+    this.invoiceCurrency = const Value.absent(),
+    this.invoiceCurrencySymbol = const Value.absent(),
+    this.invoicePrefix = const Value.absent(),
+    this.invoiceNextNumber = const Value.absent(),
+    this.themeMode = const Value.absent(),
+    this.language = const Value.absent(),
+    this.notificationsEnabled = const Value.absent(),
+    this.dailyReminderHour = const Value.absent(),
+    this.dailyReminderMinute = const Value.absent(),
+    this.weeklySummaryEnabled = const Value.absent(),
+    this.monthlySummaryEnabled = const Value.absent(),
+    this.whatsappShortcutEnabled = const Value.absent(),
+    this.defaultMessageTemplateId = const Value.absent(),
+    this.extraJson = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : uid = Value(uid),
+       email = Value(email),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<UserProfileRow> custom({
+    Expression<String>? uid,
+    Expression<int>? schemaVersion,
+    Expression<String>? accountStatus,
+    Expression<String>? email,
+    Expression<String>? displayName,
+    Expression<String>? phone,
+    Expression<String>? workshopName,
+    Expression<String>? workshopTagline,
+    Expression<String>? workshopAddress,
+    Expression<String>? workshopPhone,
+    Expression<String>? workshopEmail,
+    Expression<String>? workshopLogoUrl,
+    Expression<String>? countryCode,
+    Expression<String>? timezone,
+    Expression<double>? invoiceTaxPercent,
+    Expression<String>? invoiceCurrency,
+    Expression<String>? invoiceCurrencySymbol,
+    Expression<String>? invoicePrefix,
+    Expression<int>? invoiceNextNumber,
+    Expression<String>? themeMode,
+    Expression<String>? language,
+    Expression<bool>? notificationsEnabled,
+    Expression<int>? dailyReminderHour,
+    Expression<int>? dailyReminderMinute,
+    Expression<bool>? weeklySummaryEnabled,
+    Expression<bool>? monthlySummaryEnabled,
+    Expression<bool>? whatsappShortcutEnabled,
+    Expression<String>? defaultMessageTemplateId,
+    Expression<String>? extraJson,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (uid != null) 'uid': uid,
+      if (schemaVersion != null) 'schema_version': schemaVersion,
+      if (accountStatus != null) 'account_status': accountStatus,
+      if (email != null) 'email': email,
+      if (displayName != null) 'display_name': displayName,
+      if (phone != null) 'phone': phone,
+      if (workshopName != null) 'workshop_name': workshopName,
+      if (workshopTagline != null) 'workshop_tagline': workshopTagline,
+      if (workshopAddress != null) 'workshop_address': workshopAddress,
+      if (workshopPhone != null) 'workshop_phone': workshopPhone,
+      if (workshopEmail != null) 'workshop_email': workshopEmail,
+      if (workshopLogoUrl != null) 'workshop_logo_url': workshopLogoUrl,
+      if (countryCode != null) 'country_code': countryCode,
+      if (timezone != null) 'timezone': timezone,
+      if (invoiceTaxPercent != null) 'invoice_tax_percent': invoiceTaxPercent,
+      if (invoiceCurrency != null) 'invoice_currency': invoiceCurrency,
+      if (invoiceCurrencySymbol != null)
+        'invoice_currency_symbol': invoiceCurrencySymbol,
+      if (invoicePrefix != null) 'invoice_prefix': invoicePrefix,
+      if (invoiceNextNumber != null) 'invoice_next_number': invoiceNextNumber,
+      if (themeMode != null) 'theme_mode': themeMode,
+      if (language != null) 'language': language,
+      if (notificationsEnabled != null)
+        'notifications_enabled': notificationsEnabled,
+      if (dailyReminderHour != null) 'daily_reminder_hour': dailyReminderHour,
+      if (dailyReminderMinute != null)
+        'daily_reminder_minute': dailyReminderMinute,
+      if (weeklySummaryEnabled != null)
+        'weekly_summary_enabled': weeklySummaryEnabled,
+      if (monthlySummaryEnabled != null)
+        'monthly_summary_enabled': monthlySummaryEnabled,
+      if (whatsappShortcutEnabled != null)
+        'whatsapp_shortcut_enabled': whatsappShortcutEnabled,
+      if (defaultMessageTemplateId != null)
+        'default_message_template_id': defaultMessageTemplateId,
+      if (extraJson != null) 'extra_json': extraJson,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  UserProfilesCompanion copyWith({
+    Value<String>? uid,
+    Value<int>? schemaVersion,
+    Value<String>? accountStatus,
+    Value<String>? email,
+    Value<String>? displayName,
+    Value<String?>? phone,
+    Value<String>? workshopName,
+    Value<String?>? workshopTagline,
+    Value<String?>? workshopAddress,
+    Value<String?>? workshopPhone,
+    Value<String?>? workshopEmail,
+    Value<String?>? workshopLogoUrl,
+    Value<String?>? countryCode,
+    Value<String>? timezone,
+    Value<double>? invoiceTaxPercent,
+    Value<String>? invoiceCurrency,
+    Value<String>? invoiceCurrencySymbol,
+    Value<String>? invoicePrefix,
+    Value<int>? invoiceNextNumber,
+    Value<String>? themeMode,
+    Value<String>? language,
+    Value<bool>? notificationsEnabled,
+    Value<int>? dailyReminderHour,
+    Value<int>? dailyReminderMinute,
+    Value<bool>? weeklySummaryEnabled,
+    Value<bool>? monthlySummaryEnabled,
+    Value<bool>? whatsappShortcutEnabled,
+    Value<String?>? defaultMessageTemplateId,
+    Value<String?>? extraJson,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return UserProfilesCompanion(
+      uid: uid ?? this.uid,
+      schemaVersion: schemaVersion ?? this.schemaVersion,
+      accountStatus: accountStatus ?? this.accountStatus,
+      email: email ?? this.email,
+      displayName: displayName ?? this.displayName,
+      phone: phone ?? this.phone,
+      workshopName: workshopName ?? this.workshopName,
+      workshopTagline: workshopTagline ?? this.workshopTagline,
+      workshopAddress: workshopAddress ?? this.workshopAddress,
+      workshopPhone: workshopPhone ?? this.workshopPhone,
+      workshopEmail: workshopEmail ?? this.workshopEmail,
+      workshopLogoUrl: workshopLogoUrl ?? this.workshopLogoUrl,
+      countryCode: countryCode ?? this.countryCode,
+      timezone: timezone ?? this.timezone,
+      invoiceTaxPercent: invoiceTaxPercent ?? this.invoiceTaxPercent,
+      invoiceCurrency: invoiceCurrency ?? this.invoiceCurrency,
+      invoiceCurrencySymbol:
+          invoiceCurrencySymbol ?? this.invoiceCurrencySymbol,
+      invoicePrefix: invoicePrefix ?? this.invoicePrefix,
+      invoiceNextNumber: invoiceNextNumber ?? this.invoiceNextNumber,
+      themeMode: themeMode ?? this.themeMode,
+      language: language ?? this.language,
+      notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+      dailyReminderHour: dailyReminderHour ?? this.dailyReminderHour,
+      dailyReminderMinute: dailyReminderMinute ?? this.dailyReminderMinute,
+      weeklySummaryEnabled: weeklySummaryEnabled ?? this.weeklySummaryEnabled,
+      monthlySummaryEnabled:
+          monthlySummaryEnabled ?? this.monthlySummaryEnabled,
+      whatsappShortcutEnabled:
+          whatsappShortcutEnabled ?? this.whatsappShortcutEnabled,
+      defaultMessageTemplateId:
+          defaultMessageTemplateId ?? this.defaultMessageTemplateId,
+      extraJson: extraJson ?? this.extraJson,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (uid.present) {
+      map['uid'] = Variable<String>(uid.value);
+    }
+    if (schemaVersion.present) {
+      map['schema_version'] = Variable<int>(schemaVersion.value);
+    }
+    if (accountStatus.present) {
+      map['account_status'] = Variable<String>(accountStatus.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (workshopName.present) {
+      map['workshop_name'] = Variable<String>(workshopName.value);
+    }
+    if (workshopTagline.present) {
+      map['workshop_tagline'] = Variable<String>(workshopTagline.value);
+    }
+    if (workshopAddress.present) {
+      map['workshop_address'] = Variable<String>(workshopAddress.value);
+    }
+    if (workshopPhone.present) {
+      map['workshop_phone'] = Variable<String>(workshopPhone.value);
+    }
+    if (workshopEmail.present) {
+      map['workshop_email'] = Variable<String>(workshopEmail.value);
+    }
+    if (workshopLogoUrl.present) {
+      map['workshop_logo_url'] = Variable<String>(workshopLogoUrl.value);
+    }
+    if (countryCode.present) {
+      map['country_code'] = Variable<String>(countryCode.value);
+    }
+    if (timezone.present) {
+      map['timezone'] = Variable<String>(timezone.value);
+    }
+    if (invoiceTaxPercent.present) {
+      map['invoice_tax_percent'] = Variable<double>(invoiceTaxPercent.value);
+    }
+    if (invoiceCurrency.present) {
+      map['invoice_currency'] = Variable<String>(invoiceCurrency.value);
+    }
+    if (invoiceCurrencySymbol.present) {
+      map['invoice_currency_symbol'] = Variable<String>(
+        invoiceCurrencySymbol.value,
+      );
+    }
+    if (invoicePrefix.present) {
+      map['invoice_prefix'] = Variable<String>(invoicePrefix.value);
+    }
+    if (invoiceNextNumber.present) {
+      map['invoice_next_number'] = Variable<int>(invoiceNextNumber.value);
+    }
+    if (themeMode.present) {
+      map['theme_mode'] = Variable<String>(themeMode.value);
+    }
+    if (language.present) {
+      map['language'] = Variable<String>(language.value);
+    }
+    if (notificationsEnabled.present) {
+      map['notifications_enabled'] = Variable<bool>(notificationsEnabled.value);
+    }
+    if (dailyReminderHour.present) {
+      map['daily_reminder_hour'] = Variable<int>(dailyReminderHour.value);
+    }
+    if (dailyReminderMinute.present) {
+      map['daily_reminder_minute'] = Variable<int>(dailyReminderMinute.value);
+    }
+    if (weeklySummaryEnabled.present) {
+      map['weekly_summary_enabled'] = Variable<bool>(
+        weeklySummaryEnabled.value,
+      );
+    }
+    if (monthlySummaryEnabled.present) {
+      map['monthly_summary_enabled'] = Variable<bool>(
+        monthlySummaryEnabled.value,
+      );
+    }
+    if (whatsappShortcutEnabled.present) {
+      map['whatsapp_shortcut_enabled'] = Variable<bool>(
+        whatsappShortcutEnabled.value,
+      );
+    }
+    if (defaultMessageTemplateId.present) {
+      map['default_message_template_id'] = Variable<String>(
+        defaultMessageTemplateId.value,
+      );
+    }
+    if (extraJson.present) {
+      map['extra_json'] = Variable<String>(extraJson.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserProfilesCompanion(')
+          ..write('uid: $uid, ')
+          ..write('schemaVersion: $schemaVersion, ')
+          ..write('accountStatus: $accountStatus, ')
+          ..write('email: $email, ')
+          ..write('displayName: $displayName, ')
+          ..write('phone: $phone, ')
+          ..write('workshopName: $workshopName, ')
+          ..write('workshopTagline: $workshopTagline, ')
+          ..write('workshopAddress: $workshopAddress, ')
+          ..write('workshopPhone: $workshopPhone, ')
+          ..write('workshopEmail: $workshopEmail, ')
+          ..write('workshopLogoUrl: $workshopLogoUrl, ')
+          ..write('countryCode: $countryCode, ')
+          ..write('timezone: $timezone, ')
+          ..write('invoiceTaxPercent: $invoiceTaxPercent, ')
+          ..write('invoiceCurrency: $invoiceCurrency, ')
+          ..write('invoiceCurrencySymbol: $invoiceCurrencySymbol, ')
+          ..write('invoicePrefix: $invoicePrefix, ')
+          ..write('invoiceNextNumber: $invoiceNextNumber, ')
+          ..write('themeMode: $themeMode, ')
+          ..write('language: $language, ')
+          ..write('notificationsEnabled: $notificationsEnabled, ')
+          ..write('dailyReminderHour: $dailyReminderHour, ')
+          ..write('dailyReminderMinute: $dailyReminderMinute, ')
+          ..write('weeklySummaryEnabled: $weeklySummaryEnabled, ')
+          ..write('monthlySummaryEnabled: $monthlySummaryEnabled, ')
+          ..write('whatsappShortcutEnabled: $whatsappShortcutEnabled, ')
+          ..write('defaultMessageTemplateId: $defaultMessageTemplateId, ')
+          ..write('extraJson: $extraJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -7868,6 +9644,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   late final $SyncMetaTable syncMeta = $SyncMetaTable(this);
+  late final $UserProfilesTable userProfiles = $UserProfilesTable(this);
   late final Index idxCustomersPhone = Index(
     'idx_customers_phone',
     'CREATE INDEX idx_customers_phone ON customers (phone_number)',
@@ -7964,6 +9741,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     maintenanceLogs,
     syncOutbox,
     syncMeta,
+    userProfiles,
     idxCustomersPhone,
     idxCustomersFullName,
     idxVehiclesCustomerId,
@@ -12825,6 +14603,744 @@ typedef $$SyncMetaTableProcessedTableManager =
       SyncMetaRow,
       PrefetchHooks Function()
     >;
+typedef $$UserProfilesTableCreateCompanionBuilder =
+    UserProfilesCompanion Function({
+      required String uid,
+      Value<int> schemaVersion,
+      Value<String> accountStatus,
+      required String email,
+      Value<String> displayName,
+      Value<String?> phone,
+      Value<String> workshopName,
+      Value<String?> workshopTagline,
+      Value<String?> workshopAddress,
+      Value<String?> workshopPhone,
+      Value<String?> workshopEmail,
+      Value<String?> workshopLogoUrl,
+      Value<String?> countryCode,
+      Value<String> timezone,
+      Value<double> invoiceTaxPercent,
+      Value<String> invoiceCurrency,
+      Value<String> invoiceCurrencySymbol,
+      Value<String> invoicePrefix,
+      Value<int> invoiceNextNumber,
+      Value<String> themeMode,
+      Value<String> language,
+      Value<bool> notificationsEnabled,
+      Value<int> dailyReminderHour,
+      Value<int> dailyReminderMinute,
+      Value<bool> weeklySummaryEnabled,
+      Value<bool> monthlySummaryEnabled,
+      Value<bool> whatsappShortcutEnabled,
+      Value<String?> defaultMessageTemplateId,
+      Value<String?> extraJson,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$UserProfilesTableUpdateCompanionBuilder =
+    UserProfilesCompanion Function({
+      Value<String> uid,
+      Value<int> schemaVersion,
+      Value<String> accountStatus,
+      Value<String> email,
+      Value<String> displayName,
+      Value<String?> phone,
+      Value<String> workshopName,
+      Value<String?> workshopTagline,
+      Value<String?> workshopAddress,
+      Value<String?> workshopPhone,
+      Value<String?> workshopEmail,
+      Value<String?> workshopLogoUrl,
+      Value<String?> countryCode,
+      Value<String> timezone,
+      Value<double> invoiceTaxPercent,
+      Value<String> invoiceCurrency,
+      Value<String> invoiceCurrencySymbol,
+      Value<String> invoicePrefix,
+      Value<int> invoiceNextNumber,
+      Value<String> themeMode,
+      Value<String> language,
+      Value<bool> notificationsEnabled,
+      Value<int> dailyReminderHour,
+      Value<int> dailyReminderMinute,
+      Value<bool> weeklySummaryEnabled,
+      Value<bool> monthlySummaryEnabled,
+      Value<bool> whatsappShortcutEnabled,
+      Value<String?> defaultMessageTemplateId,
+      Value<String?> extraJson,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$UserProfilesTableFilterComposer
+    extends Composer<_$AppDatabase, $UserProfilesTable> {
+  $$UserProfilesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get uid => $composableBuilder(
+    column: $table.uid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get schemaVersion => $composableBuilder(
+    column: $table.schemaVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get accountStatus => $composableBuilder(
+    column: $table.accountStatus,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workshopName => $composableBuilder(
+    column: $table.workshopName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workshopTagline => $composableBuilder(
+    column: $table.workshopTagline,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workshopAddress => $composableBuilder(
+    column: $table.workshopAddress,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workshopPhone => $composableBuilder(
+    column: $table.workshopPhone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workshopEmail => $composableBuilder(
+    column: $table.workshopEmail,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workshopLogoUrl => $composableBuilder(
+    column: $table.workshopLogoUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get countryCode => $composableBuilder(
+    column: $table.countryCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get timezone => $composableBuilder(
+    column: $table.timezone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get invoiceTaxPercent => $composableBuilder(
+    column: $table.invoiceTaxPercent,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get invoiceCurrency => $composableBuilder(
+    column: $table.invoiceCurrency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get invoiceCurrencySymbol => $composableBuilder(
+    column: $table.invoiceCurrencySymbol,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get invoicePrefix => $composableBuilder(
+    column: $table.invoicePrefix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get invoiceNextNumber => $composableBuilder(
+    column: $table.invoiceNextNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get themeMode => $composableBuilder(
+    column: $table.themeMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get notificationsEnabled => $composableBuilder(
+    column: $table.notificationsEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dailyReminderHour => $composableBuilder(
+    column: $table.dailyReminderHour,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dailyReminderMinute => $composableBuilder(
+    column: $table.dailyReminderMinute,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get weeklySummaryEnabled => $composableBuilder(
+    column: $table.weeklySummaryEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get monthlySummaryEnabled => $composableBuilder(
+    column: $table.monthlySummaryEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get whatsappShortcutEnabled => $composableBuilder(
+    column: $table.whatsappShortcutEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get defaultMessageTemplateId => $composableBuilder(
+    column: $table.defaultMessageTemplateId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get extraJson => $composableBuilder(
+    column: $table.extraJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$UserProfilesTableOrderingComposer
+    extends Composer<_$AppDatabase, $UserProfilesTable> {
+  $$UserProfilesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get uid => $composableBuilder(
+    column: $table.uid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get schemaVersion => $composableBuilder(
+    column: $table.schemaVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get accountStatus => $composableBuilder(
+    column: $table.accountStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workshopName => $composableBuilder(
+    column: $table.workshopName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workshopTagline => $composableBuilder(
+    column: $table.workshopTagline,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workshopAddress => $composableBuilder(
+    column: $table.workshopAddress,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workshopPhone => $composableBuilder(
+    column: $table.workshopPhone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workshopEmail => $composableBuilder(
+    column: $table.workshopEmail,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workshopLogoUrl => $composableBuilder(
+    column: $table.workshopLogoUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get countryCode => $composableBuilder(
+    column: $table.countryCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get timezone => $composableBuilder(
+    column: $table.timezone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get invoiceTaxPercent => $composableBuilder(
+    column: $table.invoiceTaxPercent,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get invoiceCurrency => $composableBuilder(
+    column: $table.invoiceCurrency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get invoiceCurrencySymbol => $composableBuilder(
+    column: $table.invoiceCurrencySymbol,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get invoicePrefix => $composableBuilder(
+    column: $table.invoicePrefix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get invoiceNextNumber => $composableBuilder(
+    column: $table.invoiceNextNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get themeMode => $composableBuilder(
+    column: $table.themeMode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get notificationsEnabled => $composableBuilder(
+    column: $table.notificationsEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dailyReminderHour => $composableBuilder(
+    column: $table.dailyReminderHour,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dailyReminderMinute => $composableBuilder(
+    column: $table.dailyReminderMinute,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get weeklySummaryEnabled => $composableBuilder(
+    column: $table.weeklySummaryEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get monthlySummaryEnabled => $composableBuilder(
+    column: $table.monthlySummaryEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get whatsappShortcutEnabled => $composableBuilder(
+    column: $table.whatsappShortcutEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get defaultMessageTemplateId => $composableBuilder(
+    column: $table.defaultMessageTemplateId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get extraJson => $composableBuilder(
+    column: $table.extraJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$UserProfilesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $UserProfilesTable> {
+  $$UserProfilesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get uid =>
+      $composableBuilder(column: $table.uid, builder: (column) => column);
+
+  GeneratedColumn<int> get schemaVersion => $composableBuilder(
+    column: $table.schemaVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get accountStatus => $composableBuilder(
+    column: $table.accountStatus,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get phone =>
+      $composableBuilder(column: $table.phone, builder: (column) => column);
+
+  GeneratedColumn<String> get workshopName => $composableBuilder(
+    column: $table.workshopName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get workshopTagline => $composableBuilder(
+    column: $table.workshopTagline,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get workshopAddress => $composableBuilder(
+    column: $table.workshopAddress,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get workshopPhone => $composableBuilder(
+    column: $table.workshopPhone,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get workshopEmail => $composableBuilder(
+    column: $table.workshopEmail,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get workshopLogoUrl => $composableBuilder(
+    column: $table.workshopLogoUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get countryCode => $composableBuilder(
+    column: $table.countryCode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get timezone =>
+      $composableBuilder(column: $table.timezone, builder: (column) => column);
+
+  GeneratedColumn<double> get invoiceTaxPercent => $composableBuilder(
+    column: $table.invoiceTaxPercent,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get invoiceCurrency => $composableBuilder(
+    column: $table.invoiceCurrency,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get invoiceCurrencySymbol => $composableBuilder(
+    column: $table.invoiceCurrencySymbol,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get invoicePrefix => $composableBuilder(
+    column: $table.invoicePrefix,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get invoiceNextNumber => $composableBuilder(
+    column: $table.invoiceNextNumber,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get themeMode =>
+      $composableBuilder(column: $table.themeMode, builder: (column) => column);
+
+  GeneratedColumn<String> get language =>
+      $composableBuilder(column: $table.language, builder: (column) => column);
+
+  GeneratedColumn<bool> get notificationsEnabled => $composableBuilder(
+    column: $table.notificationsEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get dailyReminderHour => $composableBuilder(
+    column: $table.dailyReminderHour,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get dailyReminderMinute => $composableBuilder(
+    column: $table.dailyReminderMinute,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get weeklySummaryEnabled => $composableBuilder(
+    column: $table.weeklySummaryEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get monthlySummaryEnabled => $composableBuilder(
+    column: $table.monthlySummaryEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get whatsappShortcutEnabled => $composableBuilder(
+    column: $table.whatsappShortcutEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get defaultMessageTemplateId => $composableBuilder(
+    column: $table.defaultMessageTemplateId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get extraJson =>
+      $composableBuilder(column: $table.extraJson, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$UserProfilesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $UserProfilesTable,
+          UserProfileRow,
+          $$UserProfilesTableFilterComposer,
+          $$UserProfilesTableOrderingComposer,
+          $$UserProfilesTableAnnotationComposer,
+          $$UserProfilesTableCreateCompanionBuilder,
+          $$UserProfilesTableUpdateCompanionBuilder,
+          (
+            UserProfileRow,
+            BaseReferences<_$AppDatabase, $UserProfilesTable, UserProfileRow>,
+          ),
+          UserProfileRow,
+          PrefetchHooks Function()
+        > {
+  $$UserProfilesTableTableManager(_$AppDatabase db, $UserProfilesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$UserProfilesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$UserProfilesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$UserProfilesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> uid = const Value.absent(),
+                Value<int> schemaVersion = const Value.absent(),
+                Value<String> accountStatus = const Value.absent(),
+                Value<String> email = const Value.absent(),
+                Value<String> displayName = const Value.absent(),
+                Value<String?> phone = const Value.absent(),
+                Value<String> workshopName = const Value.absent(),
+                Value<String?> workshopTagline = const Value.absent(),
+                Value<String?> workshopAddress = const Value.absent(),
+                Value<String?> workshopPhone = const Value.absent(),
+                Value<String?> workshopEmail = const Value.absent(),
+                Value<String?> workshopLogoUrl = const Value.absent(),
+                Value<String?> countryCode = const Value.absent(),
+                Value<String> timezone = const Value.absent(),
+                Value<double> invoiceTaxPercent = const Value.absent(),
+                Value<String> invoiceCurrency = const Value.absent(),
+                Value<String> invoiceCurrencySymbol = const Value.absent(),
+                Value<String> invoicePrefix = const Value.absent(),
+                Value<int> invoiceNextNumber = const Value.absent(),
+                Value<String> themeMode = const Value.absent(),
+                Value<String> language = const Value.absent(),
+                Value<bool> notificationsEnabled = const Value.absent(),
+                Value<int> dailyReminderHour = const Value.absent(),
+                Value<int> dailyReminderMinute = const Value.absent(),
+                Value<bool> weeklySummaryEnabled = const Value.absent(),
+                Value<bool> monthlySummaryEnabled = const Value.absent(),
+                Value<bool> whatsappShortcutEnabled = const Value.absent(),
+                Value<String?> defaultMessageTemplateId = const Value.absent(),
+                Value<String?> extraJson = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UserProfilesCompanion(
+                uid: uid,
+                schemaVersion: schemaVersion,
+                accountStatus: accountStatus,
+                email: email,
+                displayName: displayName,
+                phone: phone,
+                workshopName: workshopName,
+                workshopTagline: workshopTagline,
+                workshopAddress: workshopAddress,
+                workshopPhone: workshopPhone,
+                workshopEmail: workshopEmail,
+                workshopLogoUrl: workshopLogoUrl,
+                countryCode: countryCode,
+                timezone: timezone,
+                invoiceTaxPercent: invoiceTaxPercent,
+                invoiceCurrency: invoiceCurrency,
+                invoiceCurrencySymbol: invoiceCurrencySymbol,
+                invoicePrefix: invoicePrefix,
+                invoiceNextNumber: invoiceNextNumber,
+                themeMode: themeMode,
+                language: language,
+                notificationsEnabled: notificationsEnabled,
+                dailyReminderHour: dailyReminderHour,
+                dailyReminderMinute: dailyReminderMinute,
+                weeklySummaryEnabled: weeklySummaryEnabled,
+                monthlySummaryEnabled: monthlySummaryEnabled,
+                whatsappShortcutEnabled: whatsappShortcutEnabled,
+                defaultMessageTemplateId: defaultMessageTemplateId,
+                extraJson: extraJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String uid,
+                Value<int> schemaVersion = const Value.absent(),
+                Value<String> accountStatus = const Value.absent(),
+                required String email,
+                Value<String> displayName = const Value.absent(),
+                Value<String?> phone = const Value.absent(),
+                Value<String> workshopName = const Value.absent(),
+                Value<String?> workshopTagline = const Value.absent(),
+                Value<String?> workshopAddress = const Value.absent(),
+                Value<String?> workshopPhone = const Value.absent(),
+                Value<String?> workshopEmail = const Value.absent(),
+                Value<String?> workshopLogoUrl = const Value.absent(),
+                Value<String?> countryCode = const Value.absent(),
+                Value<String> timezone = const Value.absent(),
+                Value<double> invoiceTaxPercent = const Value.absent(),
+                Value<String> invoiceCurrency = const Value.absent(),
+                Value<String> invoiceCurrencySymbol = const Value.absent(),
+                Value<String> invoicePrefix = const Value.absent(),
+                Value<int> invoiceNextNumber = const Value.absent(),
+                Value<String> themeMode = const Value.absent(),
+                Value<String> language = const Value.absent(),
+                Value<bool> notificationsEnabled = const Value.absent(),
+                Value<int> dailyReminderHour = const Value.absent(),
+                Value<int> dailyReminderMinute = const Value.absent(),
+                Value<bool> weeklySummaryEnabled = const Value.absent(),
+                Value<bool> monthlySummaryEnabled = const Value.absent(),
+                Value<bool> whatsappShortcutEnabled = const Value.absent(),
+                Value<String?> defaultMessageTemplateId = const Value.absent(),
+                Value<String?> extraJson = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => UserProfilesCompanion.insert(
+                uid: uid,
+                schemaVersion: schemaVersion,
+                accountStatus: accountStatus,
+                email: email,
+                displayName: displayName,
+                phone: phone,
+                workshopName: workshopName,
+                workshopTagline: workshopTagline,
+                workshopAddress: workshopAddress,
+                workshopPhone: workshopPhone,
+                workshopEmail: workshopEmail,
+                workshopLogoUrl: workshopLogoUrl,
+                countryCode: countryCode,
+                timezone: timezone,
+                invoiceTaxPercent: invoiceTaxPercent,
+                invoiceCurrency: invoiceCurrency,
+                invoiceCurrencySymbol: invoiceCurrencySymbol,
+                invoicePrefix: invoicePrefix,
+                invoiceNextNumber: invoiceNextNumber,
+                themeMode: themeMode,
+                language: language,
+                notificationsEnabled: notificationsEnabled,
+                dailyReminderHour: dailyReminderHour,
+                dailyReminderMinute: dailyReminderMinute,
+                weeklySummaryEnabled: weeklySummaryEnabled,
+                monthlySummaryEnabled: monthlySummaryEnabled,
+                whatsappShortcutEnabled: whatsappShortcutEnabled,
+                defaultMessageTemplateId: defaultMessageTemplateId,
+                extraJson: extraJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$UserProfilesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $UserProfilesTable,
+      UserProfileRow,
+      $$UserProfilesTableFilterComposer,
+      $$UserProfilesTableOrderingComposer,
+      $$UserProfilesTableAnnotationComposer,
+      $$UserProfilesTableCreateCompanionBuilder,
+      $$UserProfilesTableUpdateCompanionBuilder,
+      (
+        UserProfileRow,
+        BaseReferences<_$AppDatabase, $UserProfilesTable, UserProfileRow>,
+      ),
+      UserProfileRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -12851,4 +15367,6 @@ class $AppDatabaseManager {
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
   $$SyncMetaTableTableManager get syncMeta =>
       $$SyncMetaTableTableManager(_db, _db.syncMeta);
+  $$UserProfilesTableTableManager get userProfiles =>
+      $$UserProfilesTableTableManager(_db, _db.userProfiles);
 }

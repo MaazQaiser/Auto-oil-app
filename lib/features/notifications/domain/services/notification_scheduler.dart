@@ -1,24 +1,28 @@
-import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../../../core/sync/sync_outbox_datasource.dart';
 import '../../../../core/utils/logger.dart';
 import 'notification_service.dart';
 
-/// Schedules recurring summary notifications and tracks dedupe keys.
+/// Schedules recurring summary notifications and tracks dedupe keys locally.
 class NotificationScheduler {
-  NotificationScheduler(this._notifications, this._prefs);
+  NotificationScheduler(this._notifications, this._deviceState);
 
   final NotificationService _notifications;
-  final SharedPreferences _prefs;
+  final SyncOutboxDataSource _deviceState;
 
   static const String _dedupePrefix = 'notif_dedupe_';
   static const int dailyCheckNotifId = 9001;
   static const int weeklySummaryNotifId = 9002;
   static const int monthlySummaryNotifId = 9003;
 
-  /// Returns true if this [key] has not been used today (or ever for non-daily).
-  bool shouldNotify(String key, {Duration cooldown = const Duration(hours: 20)}) {
+  /// Returns true if this [key] has not been used within [cooldown].
+  Future<bool> shouldNotify(
+    String key, {
+    Duration cooldown = const Duration(hours: 20),
+  }) async {
     final String prefKey = '$_dedupePrefix$key';
-    final int? millis = _prefs.getInt(prefKey);
+    final String? raw = await _deviceState.getMeta(prefKey);
+    if (raw == null) return true;
+    final int? millis = int.tryParse(raw);
     if (millis == null) return true;
     final DateTime last =
         DateTime.fromMillisecondsSinceEpoch(millis, isUtc: true);
@@ -26,9 +30,9 @@ class NotificationScheduler {
   }
 
   Future<void> markNotified(String key) async {
-    await _prefs.setInt(
+    await _deviceState.setMeta(
       '$_dedupePrefix$key',
-      DateTime.now().toUtc().millisecondsSinceEpoch,
+      DateTime.now().toUtc().millisecondsSinceEpoch.toString(),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
+import 'schema_registry.dart';
 import 'tables/customers_table.dart';
 import 'tables/inventory_items_table.dart';
 import 'tables/invoices_table.dart';
@@ -11,6 +12,7 @@ import 'tables/reminder_history_table.dart';
 import 'tables/service_records_table.dart';
 import 'tables/sync_meta_table.dart';
 import 'tables/sync_outbox_table.dart';
+import 'tables/user_profiles_table.dart';
 import 'tables/vehicles_table.dart';
 
 part 'app_database.g.dart';
@@ -28,13 +30,14 @@ part 'app_database.g.dart';
     MaintenanceLogs,
     SyncOutbox,
     SyncMeta,
+    UserProfiles,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 10;
+  int get schemaVersion => SchemaRegistry.localDatabaseVersion;
 
   @override
   MigrationStrategy get migration {
@@ -71,6 +74,18 @@ class AppDatabase extends _$AppDatabase {
         if (from < 10) {
           await m.createTable(syncOutbox);
           await m.createTable(syncMeta);
+        }
+        if (from < 11) {
+          await m.createTable(userProfiles);
+        } else if (from < 12) {
+          await m.addColumn(userProfiles, userProfiles.schemaVersion);
+          await m.addColumn(userProfiles, userProfiles.accountStatus);
+          await m.addColumn(userProfiles, userProfiles.workshopTagline);
+          await m.addColumn(userProfiles, userProfiles.workshopEmail);
+          await m.addColumn(userProfiles, userProfiles.workshopLogoUrl);
+          await m.addColumn(userProfiles, userProfiles.countryCode);
+          await m.addColumn(userProfiles, userProfiles.timezone);
+          await m.addColumn(userProfiles, userProfiles.extraJson);
         }
       },
     );

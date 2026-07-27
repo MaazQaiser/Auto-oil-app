@@ -2,168 +2,278 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_constants.dart';
-import '../config/app_config.dart';
 import '../utils/logger.dart';
+import '../../features/settings/data/repositories/user_profile_repository.dart';
+import '../../features/settings/domain/entities/user_profile.dart';
+import 'auth_preferences.dart';
 
-/// Persists user preferences (theme, language, notifications).
+/// Reads/writes workshop profile and settings via SQLite + Firestore sync.
 class SettingsService {
-  SettingsService(this._prefs);
+  SettingsService({
+    required UserProfileRepository repository,
+    required AuthPreferences authPreferences,
+  })  : _repository = repository,
+        _authPreferences = authPreferences;
 
-  final SharedPreferences _prefs;
+  final UserProfileRepository _repository;
+  final AuthPreferences _authPreferences;
 
-  static Future<SettingsService> create() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return SettingsService(prefs);
+  UserProfile? _profile;
+  bool _legacyMigrated = false;
+
+  UserProfile get _active =>
+      _profile ??
+      UserProfile.defaults(uid: 'local', email: '');
+
+  bool get isLoaded => _profile != null;
+
+  Future<void> loadForUser({
+    required String uid,
+    required String email,
+    String? displayName,
+  }) async {
+    await _authPreferences.setActiveUid(uid);
+    await _authPreferences.setLastLoginEmail(email);
+
+    UserProfile profile = await _repository.getOrCreate(
+      uid: uid,
+      email: email,
+      displayName: displayName,
+    );
+
+    if (!_legacyMigrated) {
+      profile = await _migrateLegacyPreferences(profile);
+      _legacyMigrated = true;
+      profile = await _repository.save(profile);
+    }
+
+    _profile = await _repository.ensureSynced(
+      uid: uid,
+      email: email,
+      displayName: displayName,
+    );
+  }
+
+  Future<void> clearUser() async {
+    _profile = null;
+    await _authPreferences.setActiveUid(null);
+  }
+
+  Future<UserProfile?> profileForUid(String uid) {
+    return _repository.getByUid(uid);
+  }
+
+  Future<void> _persist(UserProfile Function(UserProfile current) update) async {
+    if (_profile == null) {
+      AppLogger.warning('SettingsService: no active profile — change ignored');
+      return;
+    }
+    _profile = await _repository.save(update(_profile!));
+  }
+
+  Future<UserProfile> _migrateLegacyPreferences(UserProfile profile) async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool hasLegacy = prefs.containsKey(AppConstants.themeModeKey) ||
+        prefs.containsKey(AppConstants.userNameKey) ||
+        prefs.containsKey(AppConstants.workshopDisplayNameKey);
+    if (!hasLegacy) return profile;
+
+    final migrated = profile.copyWith(
+      displayName: prefs.getString(AppConstants.userNameKey) ?? profile.displayName,
+      phone: prefs.getString(AppConstants.userPhoneKey),
+      workshopName: prefs.getString(AppConstants.workshopDisplayNameKey) ??
+          profile.workshopName,
+      workshopAddress: prefs.getString(AppConstants.workshopAddressKey),
+      workshopPhone: prefs.getString(AppConstants.workshopPhoneKey),
+      invoiceTaxPercent:
+          prefs.getDouble(AppConstants.invoiceTaxPercentKey) ?? profile.invoiceTaxPercent,
+      invoiceCurrency:
+          prefs.getString(AppConstants.invoiceCurrencyKey) ?? profile.invoiceCurrency,
+      invoiceCurrencySymbol: prefs.getString(AppConstants.invoiceCurrencySymbolKey) ??
+          profile.invoiceCurrencySymbol,
+      invoicePrefix:
+          prefs.getString(AppConstants.invoicePrefixKey) ?? profile.invoicePrefix,
+      invoiceNextNumber:
+          prefs.getInt(AppConstants.invoiceNextNumberKey) ?? profile.invoiceNextNumber,
+      themeMode: prefs.getString(AppConstants.themeModeKey) ?? profile.themeMode,
+      language: prefs.getString(AppConstants.languageKey) ?? profile.language,
+      notificationsEnabled:
+          prefs.getBool(AppConstants.notificationsEnabledKey) ??
+              profile.notificationsEnabled,
+      dailyReminderHour:
+          prefs.getInt(AppConstants.dailyReminderHourKey) ?? profile.dailyReminderHour,
+      dailyReminderMinute:
+          prefs.getInt(AppConstants.dailyReminderMinuteKey) ??
+              profile.dailyReminderMinute,
+      weeklySummaryEnabled:
+          prefs.getBool(AppConstants.weeklySummaryEnabledKey) ??
+              profile.weeklySummaryEnabled,
+      monthlySummaryEnabled:
+          prefs.getBool(AppConstants.monthlySummaryEnabledKey) ??
+              profile.monthlySummaryEnabled,
+      whatsappShortcutEnabled:
+          prefs.getBool(AppConstants.whatsappShortcutEnabledKey) ??
+              profile.whatsappShortcutEnabled,
+      defaultMessageTemplateId:
+          prefs.getString(AppConstants.defaultMessageTemplateIdKey),
+      updatedAt: DateTime.now().toUtc(),
+    );
+
+    for (final key in [
+      AppConstants.themeModeKey,
+      AppConstants.languageKey,
+      AppConstants.notificationsEnabledKey,
+      AppConstants.dailyReminderHourKey,
+      AppConstants.dailyReminderMinuteKey,
+      AppConstants.weeklySummaryEnabledKey,
+      AppConstants.monthlySummaryEnabledKey,
+      AppConstants.whatsappShortcutEnabledKey,
+      AppConstants.defaultMessageTemplateIdKey,
+      AppConstants.workshopAddressKey,
+      AppConstants.workshopPhoneKey,
+      AppConstants.invoiceTaxPercentKey,
+      AppConstants.invoiceCurrencyKey,
+      AppConstants.invoiceCurrencySymbolKey,
+      AppConstants.invoicePrefixKey,
+      AppConstants.invoiceNextNumberKey,
+      AppConstants.workshopDisplayNameKey,
+      AppConstants.userNameKey,
+      AppConstants.userEmailKey,
+      AppConstants.userPhoneKey,
+    ]) {
+      await prefs.remove(key);
+    }
+
+    AppLogger.info('Migrated legacy SharedPreferences into user profile');
+    return migrated;
   }
 
   // ── Theme ──────────────────────────────────────────────
 
-  ThemeMode get themeMode {
-    final String? value = _prefs.getString(AppConstants.themeModeKey);
-    return switch (value) {
-      'light' => ThemeMode.light,
-      'dark' => ThemeMode.dark,
-      'system' => ThemeMode.system,
-      _ => ThemeMode.system,
-    };
-  }
+  ThemeMode get themeMode => _active.themeModeValue;
 
   Future<void> setThemeMode(ThemeMode mode) async {
-    final String value = switch (mode) {
+    final value = switch (mode) {
       ThemeMode.light => 'light',
       ThemeMode.dark => 'dark',
       ThemeMode.system => 'system',
     };
-    await _prefs.setString(AppConstants.themeModeKey, value);
+    await _persist((p) => p.copyWith(themeMode: value));
     AppLogger.info('Theme mode set to $value');
   }
 
   // ── Language ───────────────────────────────────────────
 
-  String get language =>
-      _prefs.getString(AppConstants.languageKey) ?? AppConfig.defaultLanguage;
+  String get language => _active.language;
 
   Future<void> setLanguage(String languageCode) async {
-    await _prefs.setString(AppConstants.languageKey, languageCode);
+    await _persist((p) => p.copyWith(language: languageCode));
     AppLogger.info('Language set to $languageCode');
   }
 
   // ── Notifications ──────────────────────────────────────
 
-  bool get notificationsEnabled =>
-      _prefs.getBool(AppConstants.notificationsEnabledKey) ?? true;
+  bool get notificationsEnabled => _active.notificationsEnabled;
 
   Future<void> setNotificationsEnabled(bool enabled) async {
-    await _prefs.setBool(AppConstants.notificationsEnabledKey, enabled);
+    await _persist((p) => p.copyWith(notificationsEnabled: enabled));
     AppLogger.info('Notifications enabled: $enabled');
   }
 
-  int get dailyReminderHour =>
-      _prefs.getInt(AppConstants.dailyReminderHourKey) ?? 8;
+  int get dailyReminderHour => _active.dailyReminderHour;
 
-  int get dailyReminderMinute =>
-      _prefs.getInt(AppConstants.dailyReminderMinuteKey) ?? 0;
+  int get dailyReminderMinute => _active.dailyReminderMinute;
 
   Future<void> setDailyReminderTime({
     required int hour,
     required int minute,
   }) async {
-    await _prefs.setInt(AppConstants.dailyReminderHourKey, hour);
-    await _prefs.setInt(AppConstants.dailyReminderMinuteKey, minute);
+    await _persist(
+      (p) => p.copyWith(
+        dailyReminderHour: hour,
+        dailyReminderMinute: minute,
+      ),
+    );
     AppLogger.info('Daily reminder time set to $hour:$minute');
   }
 
-  bool get weeklySummaryEnabled =>
-      _prefs.getBool(AppConstants.weeklySummaryEnabledKey) ?? true;
+  bool get weeklySummaryEnabled => _active.weeklySummaryEnabled;
 
   Future<void> setWeeklySummaryEnabled(bool enabled) async {
-    await _prefs.setBool(AppConstants.weeklySummaryEnabledKey, enabled);
+    await _persist((p) => p.copyWith(weeklySummaryEnabled: enabled));
   }
 
-  bool get monthlySummaryEnabled =>
-      _prefs.getBool(AppConstants.monthlySummaryEnabledKey) ?? true;
+  bool get monthlySummaryEnabled => _active.monthlySummaryEnabled;
 
   Future<void> setMonthlySummaryEnabled(bool enabled) async {
-    await _prefs.setBool(AppConstants.monthlySummaryEnabledKey, enabled);
+    await _persist((p) => p.copyWith(monthlySummaryEnabled: enabled));
   }
 
-  bool get whatsappShortcutEnabled =>
-      _prefs.getBool(AppConstants.whatsappShortcutEnabledKey) ?? true;
+  bool get whatsappShortcutEnabled => _active.whatsappShortcutEnabled;
 
   Future<void> setWhatsappShortcutEnabled(bool enabled) async {
-    await _prefs.setBool(AppConstants.whatsappShortcutEnabledKey, enabled);
+    await _persist((p) => p.copyWith(whatsappShortcutEnabled: enabled));
   }
 
-  String? get defaultMessageTemplateId =>
-      _prefs.getString(AppConstants.defaultMessageTemplateIdKey);
+  String? get defaultMessageTemplateId => _active.defaultMessageTemplateId;
 
   Future<void> setDefaultMessageTemplateId(String? id) async {
-    if (id == null) {
-      await _prefs.remove(AppConstants.defaultMessageTemplateIdKey);
-    } else {
-      await _prefs.setString(AppConstants.defaultMessageTemplateIdKey, id);
-    }
+    await _persist(
+      (p) => p.copyWith(
+        defaultMessageTemplateId: id,
+        clearDefaultMessageTemplateId: id == null,
+      ),
+    );
   }
 
   // ── Invoice / workshop ─────────────────────────────────
 
-  String get workshopDisplayName =>
-      _prefs.getString(AppConstants.workshopDisplayNameKey) ??
-      AppConfig.workshopName;
+  String get workshopDisplayName => _active.workshopName;
 
   Future<void> setWorkshopDisplayName(String name) async {
-    await _prefs.setString(AppConstants.workshopDisplayNameKey, name);
+    await _persist((p) => p.copyWith(workshopName: name));
   }
 
-  String get workshopAddress =>
-      _prefs.getString(AppConstants.workshopAddressKey) ?? '';
+  String get workshopAddress => _active.workshopAddress ?? '';
 
   Future<void> setWorkshopAddress(String value) async {
-    await _prefs.setString(AppConstants.workshopAddressKey, value);
+    await _persist((p) => p.copyWith(workshopAddress: value));
   }
 
-  String get workshopPhone =>
-      _prefs.getString(AppConstants.workshopPhoneKey) ?? '';
+  String get workshopPhone => _active.workshopPhone ?? '';
 
   Future<void> setWorkshopPhone(String value) async {
-    await _prefs.setString(AppConstants.workshopPhoneKey, value);
+    await _persist((p) => p.copyWith(workshopPhone: value));
   }
 
-  double get invoiceTaxPercent =>
-      _prefs.getDouble(AppConstants.invoiceTaxPercentKey) ?? 0;
+  double get invoiceTaxPercent => _active.invoiceTaxPercent;
 
   Future<void> setInvoiceTaxPercent(double value) async {
-    await _prefs.setDouble(AppConstants.invoiceTaxPercentKey, value);
+    await _persist((p) => p.copyWith(invoiceTaxPercent: value));
   }
 
-  String get invoiceCurrency =>
-      _prefs.getString(AppConstants.invoiceCurrencyKey) ??
-      AppConstants.defaultCurrencyCode;
+  String get invoiceCurrency => _active.invoiceCurrency;
 
   Future<void> setInvoiceCurrency(String value) async {
-    await _prefs.setString(AppConstants.invoiceCurrencyKey, value);
+    await _persist((p) => p.copyWith(invoiceCurrency: value));
   }
 
-  String get invoiceCurrencySymbol =>
-      _prefs.getString(AppConstants.invoiceCurrencySymbolKey) ??
-      AppConstants.defaultCurrencySymbol;
+  String get invoiceCurrencySymbol => _active.invoiceCurrencySymbol;
 
   Future<void> setInvoiceCurrencySymbol(String value) async {
-    await _prefs.setString(AppConstants.invoiceCurrencySymbolKey, value);
+    await _persist((p) => p.copyWith(invoiceCurrencySymbol: value));
   }
 
-  String get invoicePrefix =>
-      _prefs.getString(AppConstants.invoicePrefixKey) ?? 'INV';
+  String get invoicePrefix => _active.invoicePrefix;
 
   Future<void> setInvoicePrefix(String value) async {
-    await _prefs.setString(AppConstants.invoicePrefixKey, value);
+    await _persist((p) => p.copyWith(invoicePrefix: value));
   }
 
-  int get invoiceNextNumber =>
-      _prefs.getInt(AppConstants.invoiceNextNumberKey) ?? 1;
+  int get invoiceNextNumber => _active.invoiceNextNumber;
 
   Future<void> setInvoiceNextNumber(int value) async {
-    await _prefs.setInt(AppConstants.invoiceNextNumberKey, value);
+    await _persist((p) => p.copyWith(invoiceNextNumber: value));
   }
 
   Future<String> allocateInvoiceNumber() async {
@@ -175,36 +285,25 @@ class SettingsService {
 
   // ── User profile ───────────────────────────────────────
 
-  String get userName => _prefs.getString(AppConstants.userNameKey) ?? 'Owner';
+  String get userName => _active.displayName;
 
   Future<void> setUserName(String value) async {
-    await _prefs.setString(AppConstants.userNameKey, value);
+    await _persist((p) => p.copyWith(displayName: value));
   }
 
-  String get userEmail => _prefs.getString(AppConstants.userEmailKey) ?? '';
+  String get userEmail => _active.email;
 
   Future<void> setUserEmail(String value) async {
-    await _prefs.setString(AppConstants.userEmailKey, value);
+    await _persist((p) => p.copyWith(email: value));
   }
 
-  String get userPhone => _prefs.getString(AppConstants.userPhoneKey) ?? '';
+  String get userPhone => _active.phone ?? '';
 
   Future<void> setUserPhone(String value) async {
-    await _prefs.setString(AppConstants.userPhoneKey, value);
+    await _persist((p) => p.copyWith(phone: value));
   }
 
-  bool get hasPassword =>
-      (_prefs.getString(AppConstants.userPasswordKey) ?? '').isNotEmpty;
+  String? get lastLoginEmail => _authPreferences.lastLoginEmail;
 
-  bool verifyPassword(String password) {
-    final stored = _prefs.getString(AppConstants.userPasswordKey) ?? '';
-    if (stored.isEmpty) return password.isEmpty;
-    return stored == password;
-  }
-
-  Future<void> setPassword(String password) async {
-    await _prefs.setString(AppConstants.userPasswordKey, password);
-  }
-
-  SharedPreferences get prefs => _prefs;
+  String? get activeUid => _authPreferences.activeUid;
 }

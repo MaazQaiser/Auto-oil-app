@@ -390,4 +390,12 @@ abstract final class SyncSerializers {
     if (localUpdatedAt == null) return true;
     return !remoteUpdatedAt.isBefore(localUpdatedAt);
   }
+
+  /// Extracts the logical updated timestamp from a sync payload / Firestore map.
+  static DateTime updatedAtFromMap(Map<String, dynamic> m) {
+    return _parseDate(m['updatedAt'], fallback: _parseDate(m['createdAt']));
+  }
+
+  static bool isTombstone(Map<String, dynamic> m) =>
+      m['isDeleted'] == true || m['_deleted'] == true;
 }

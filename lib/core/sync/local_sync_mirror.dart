@@ -26,6 +26,12 @@ class LocalSyncMirror {
     required String collection,
     required Map<String, dynamic> data,
   }) async {
+    final String documentId = data['id'] as String;
+    if (SyncSerializers.isTombstone(data)) {
+      await applyRemoteDelete(collection: collection, documentId: documentId);
+      return;
+    }
+
     switch (collection) {
       case SyncCollections.customers:
         await _applyCustomer(SyncSerializers.customerFromMap(data));
@@ -89,6 +95,44 @@ class LocalSyncMirror {
         await (_db.delete(_db.reminderHistory)
               ..where((t) => t.id.equals(documentId)))
             .go();
+    }
+  }
+
+  /// Local document ids for deletion reconciliation.
+  Future<Set<String>> listLocalIds(String collection) async {
+    switch (collection) {
+      case SyncCollections.customers:
+        return (await _db.select(_db.customers).get()).map((r) => r.id).toSet();
+      case SyncCollections.vehicles:
+        return (await _db.select(_db.vehicles).get()).map((r) => r.id).toSet();
+      case SyncCollections.serviceRecords:
+        return (await _db.select(_db.serviceRecords).get())
+            .map((r) => r.id)
+            .toSet();
+      case SyncCollections.maintenanceReminders:
+        return (await _db.select(_db.maintenanceReminders).get())
+            .map((r) => r.id)
+            .toSet();
+      case SyncCollections.invoices:
+        return (await _db.select(_db.invoices).get()).map((r) => r.id).toSet();
+      case SyncCollections.inventoryItems:
+        return (await _db.select(_db.inventoryItems).get())
+            .map((r) => r.id)
+            .toSet();
+      case SyncCollections.messageTemplates:
+        return (await _db.select(_db.messageTemplates).get())
+            .map((r) => r.id)
+            .toSet();
+      case SyncCollections.maintenanceLogs:
+        return (await _db.select(_db.maintenanceLogs).get())
+            .map((r) => r.id)
+            .toSet();
+      case SyncCollections.reminderHistory:
+        return (await _db.select(_db.reminderHistory).get())
+            .map((r) => r.id)
+            .toSet();
+      default:
+        return {};
     }
   }
 

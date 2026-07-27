@@ -71,7 +71,8 @@ class NotificationManager {
     final String todayKey = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     if (due.isNotEmpty &&
-        (forceSummaries || _scheduler.shouldNotify('due_today_$todayKey'))) {
+        (forceSummaries ||
+            await _scheduler.shouldNotify('due_today_$todayKey'))) {
       await _notifications.show(
         id: 1001,
         title: 'Maintenance Due Today',
@@ -92,7 +93,7 @@ class NotificationManager {
 
     for (final r in overdue.take(5)) {
       final String key = 'overdue_${r.id}_$todayKey';
-      if (!forceSummaries && !_scheduler.shouldNotify(key)) continue;
+      if (!forceSummaries && !await _scheduler.shouldNotify(key)) continue;
       final int daysLate = -(r.remainingDays ?? 0);
       await _notifications.show(
         id: _stableId('overdue_${r.id}'),
@@ -121,7 +122,7 @@ class NotificationManager {
 
     for (final r in upcomingOneDay.take(5)) {
       final String key = 'upcoming1_${r.id}_$todayKey';
-      if (!forceSummaries && !_scheduler.shouldNotify(key)) continue;
+      if (!forceSummaries && !await _scheduler.shouldNotify(key)) continue;
       await _notifications.show(
         id: _stableId('upcoming_${r.id}'),
         title: 'Maintenance Tomorrow',
@@ -159,7 +160,8 @@ class NotificationManager {
     if (!force && now.weekday != DateTime.monday) return;
     final String weekKey =
         'weekly_${now.year}_w${_weekOfYear(now)}';
-    if (!force && !_scheduler.shouldNotify(weekKey, cooldown: const Duration(days: 6))) {
+    if (!force &&
+        !await _scheduler.shouldNotify(weekKey, cooldown: const Duration(days: 6))) {
       return;
     }
 
@@ -194,7 +196,7 @@ class NotificationManager {
     if (!force && now.day != 1) return;
     final String monthKey = 'monthly_${now.year}_${now.month}';
     if (!force &&
-        !_scheduler.shouldNotify(monthKey, cooldown: const Duration(days: 27))) {
+        !await _scheduler.shouldNotify(monthKey, cooldown: const Duration(days: 27))) {
       return;
     }
 
