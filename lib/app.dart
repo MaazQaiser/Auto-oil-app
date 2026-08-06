@@ -22,13 +22,18 @@ class AutoCareApp extends ConsumerStatefulWidget {
 
 class _AutoCareAppState extends ConsumerState<AutoCareApp>
     with WidgetsBindingObserver {
+  bool _deferredServicesStarted = false;
+  bool _notificationBootstrapStarted = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await ref.read(notificationBootstrapProvider.future);
-      _handlePendingNotification();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      // Render the first route before opening DB/Firebase/notification streams.
+      // This keeps startup responsive when native plugins are slow to initialize.
+      setState(() => _deferredServicesStarted = true);
     });
   }
 
@@ -78,9 +83,19 @@ class _AutoCareAppState extends ConsumerState<AutoCareApp>
 
   @override
   Widget build(BuildContext context) {
-    // Keep Firebase offline sync warm while signed in.
-    ref.watch(syncBootstrapProvider);
-    ref.watch(userProfileBootstrapProvider);
+    if (_deferredServicesStarted) {
+      // Keep Firebase offline sync warm while signed in.
+      ref.watch(syncBootstrapProvider);
+      ref.watch(userProfileBootstrapProvider);
+      if (!_notificationBootstrapStarted) {
+        _notificationBootstrapStarted = true;
+        ref.read(notificationBootstrapProvider.future).then((_) {
+          _handlePendingNotification();
+        }).catchError((Object e, StackTrace st) {
+          debugPrint('AutoCare: notification bootstrap failed: $e');
+        });
+      }
+    }
 
     // Re-run handler when a notification sets pending payload.
     ref.listen(pendingNotificationPayloadProvider, (prev, next) {

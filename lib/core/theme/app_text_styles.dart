@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
-/// Muzammil Autos typography — Inter across the app.
+/// Muzammil Autos typography — Inter when bundled, system sans otherwise.
+///
+/// Avoids runtime HTTP fetches from fonts.gstatic.com (which blank the UI
+/// when the simulator/device is offline).
 class AppTextStyles {
   const AppTextStyles._();
 
-  static TextStyle get _base => GoogleFonts.inter();
+  static const String _fontFamily = 'Inter';
+
+  static TextStyle get _base => const TextStyle(
+        fontFamily: _fontFamily,
+        fontFamilyFallback: <String>['SF Pro Text', 'Roboto', 'Helvetica'],
+      );
 
   static TextStyle displayLarge = _base.copyWith(
     fontSize: 57,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '../../../../core/sync/firestore_remote_datasource.dart';
 import '../../../../core/utils/logger.dart';
 import '../../domain/entities/user_profile.dart';
@@ -54,9 +56,13 @@ class UserProfileRepository {
     );
 
     try {
-      final UserProfile? remote = await _remote.getUserProfile(uid);
+      final UserProfile? remote = await _remote
+          .getUserProfile(uid)
+          .timeout(const Duration(seconds: 5));
       if (remote == null) {
-        await _remote.setUserProfile(local);
+        await _remote
+            .setUserProfile(local)
+            .timeout(const Duration(seconds: 5));
         AppLogger.info('Seeded Firestore user profile for uid=$uid');
         return local;
       }
@@ -68,7 +74,9 @@ class UserProfileRepository {
       }
 
       if (local.updatedAt.isAfter(remote.updatedAt)) {
-        await _remote.setUserProfile(local);
+        await _remote
+            .setUserProfile(local)
+            .timeout(const Duration(seconds: 5));
         AppLogger.info('Pushed newer local user profile for uid=$uid');
       }
     } catch (e, st) {

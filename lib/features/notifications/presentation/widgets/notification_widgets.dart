@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/whatsapp_cta_button.dart';
 
 class WhatsAppButton extends StatelessWidget {
   const WhatsAppButton({
@@ -19,16 +20,16 @@ class WhatsAppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (compact) {
-      return IconButton(
-        tooltip: label,
+      return WhatsAppIconButton(
         onPressed: onPressed,
-        icon: const Icon(Icons.chat_rounded, color: Color(0xFF25D366)),
+        tooltip: label,
+        filled: false,
       );
     }
-    return FilledButton.tonalIcon(
+    return WhatsAppCtaButton(
       onPressed: onPressed,
-      icon: const Icon(Icons.chat_rounded, color: Color(0xFF25D366)),
-      label: Text(label),
+      label: label,
+      isExpanded: false,
     );
   }
 }

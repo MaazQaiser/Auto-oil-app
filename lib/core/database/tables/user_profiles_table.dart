@@ -55,7 +55,7 @@ class UserProfiles extends Table {
   IntColumn get invoiceNextNumber => integer().withDefault(const Constant(1))();
 
   /// light | dark | system
-  TextColumn get themeMode => text().withDefault(const Constant('system'))();
+  TextColumn get themeMode => text().withDefault(const Constant('light'))();
 
   TextColumn get language => text().withDefault(const Constant('en'))();
 

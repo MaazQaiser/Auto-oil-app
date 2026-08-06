@@ -39,17 +39,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: AppRoutes.splash,
+    // A route must be immediately usable even when startup services are still
+    // warming up. The old splash route waited on a delayed callback that could
+    // be starved by plugin initialization on iOS simulators.
+    initialLocation: fb.FirebaseAuth.instance.currentUser != null
+        ? AppRoutes.dashboard
+        : AppRoutes.login,
     refreshListenable: authNotifier,
     debugLogDiagnostics: false,
     redirect: (context, state) {
       final location = state.matchedLocation;
 
-      // Splash manages its own auth-aware navigation — don't redirect it.
-      if (location == AppRoutes.splash) return null;
-
       final isLoggedIn = fb.FirebaseAuth.instance.currentUser != null;
 
+      if (location == AppRoutes.splash) {
+        return isLoggedIn ? AppRoutes.dashboard : AppRoutes.login;
+      }
       if (!isLoggedIn && location != AppRoutes.login) {
         return AppRoutes.login;
       }

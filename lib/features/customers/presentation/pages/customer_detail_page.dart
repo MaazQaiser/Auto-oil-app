@@ -16,9 +16,8 @@ import '../../../../core/widgets/confirmation_dialog.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/loading_indicator.dart';
-import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/secondary_button.dart';
-import '../../../../core/widgets/section_title.dart';
+import '../../../../core/widgets/whatsapp_cta_button.dart';
 import '../../../vehicles/domain/entities/vehicle.dart';
 import '../../../vehicles/presentation/providers/vehicle_providers.dart';
 import '../../../vehicles/presentation/widgets/vehicle_card.dart';
@@ -65,8 +64,7 @@ class CustomerDetailPage extends ConsumerWidget {
     }
 
     String? vehicleId = vehicles.length == 1 ? vehicles.first.id : null;
-    if (vehicleId == null) {
-      vehicleId = await showModalBottomSheet<String>(
+    vehicleId ??= await showModalBottomSheet<String>(
         context: context,
         backgroundColor: AppColors.white,
         shape: const RoundedRectangleBorder(
@@ -111,7 +109,6 @@ class CustomerDetailPage extends ConsumerWidget {
           );
         },
       );
-    }
 
     if (vehicleId == null || !context.mounted) return;
     context.push(AppRoutes.updateServiceHistoryPath(vehicleId));
@@ -166,6 +163,197 @@ class CustomerDetailPage extends ConsumerWidget {
     }
   }
 
+  Widget _buildHeroCard(
+    BuildContext context, {
+    required Customer customer,
+    required String whatsapp,
+    required List<Vehicle> vehicles,
+  }) {
+    final Color muted = Theme.of(context).brightness == Brightness.dark
+        ? AppColors.silver
+        : AppColors.grey600;
+
+    return AppCard(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomerAvatar(
+                name: customer.fullName,
+                size: 72,
+                fontSize: 30,
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      customer.fullName,
+                      style: AppTextStyles.titleLarge.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xxs),
+                    Text(
+                      customer.phoneNumber,
+                      style: AppTextStyles.bodyMedium.copyWith(color: muted),
+                    ),
+                    if (customer.isArchived) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      Chip(
+                        visualDensity: VisualDensity.compact,
+                        padding: EdgeInsets.zero,
+                        avatar: const Icon(Icons.archive_outlined, size: 14),
+                        label: const Text('Archived'),
+                        backgroundColor:
+                            AppColors.warning.withValues(alpha: 0.12),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  IconButton.filled(
+                    tooltip: 'Call',
+                    onPressed: () => _launchTel(context, customer.phoneNumber),
+                    style: IconButton.styleFrom(
+                      backgroundColor: AppColors.grey100,
+                      foregroundColor: AppColors.charcoal,
+                      minimumSize: const Size(40, 40),
+                    ),
+                    icon: const Icon(Icons.phone_rounded, size: 20),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  WhatsAppIconButton(
+                    filled: true,
+                    onPressed: () => _launchWhatsApp(context, whatsapp),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          if (!customer.isArchived) ...[
+            const SizedBox(height: AppSpacing.lg),
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: WhatsAppCtaButton(
+                    onPressed: () => _launchWhatsApp(context, whatsapp),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  flex: 2,
+                  child: OutlinedButton.icon(
+                    onPressed: () =>
+                        _openUpdateMaintenanceLog(context, vehicles),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(0, 48),
+                      foregroundColor: AppColors.charcoal,
+                      side: const BorderSide(color: AppColors.grey300),
+                    ),
+                    icon: const Icon(Icons.note_alt_outlined, size: 18),
+                    label: const Text('Log'),
+                  ),
+                ),
+              ],
+            ),
+          ] else ...[
+            const SizedBox(height: AppSpacing.lg),
+            WhatsAppCtaButton(
+              onPressed: () => _launchWhatsApp(context, whatsapp),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContactSection(
+    BuildContext context, {
+    required Customer customer,
+    required String whatsapp,
+  }) {
+    return AppCard(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      child: Column(
+        children: [
+          CustomerInfoTile(
+            compact: true,
+            icon: Icons.phone_outlined,
+            label: StringConstants.phoneNumber,
+            value: customer.phoneNumber,
+            onTap: () => _launchTel(context, customer.phoneNumber),
+            trailingAction: CustomerInfoActionButton(
+              icon: Icons.phone_rounded,
+              tooltip: 'Call',
+              onPressed: () => _launchTel(context, customer.phoneNumber),
+            ),
+          ),
+          const Divider(height: 1, indent: 48),
+          CustomerInfoTile(
+            compact: true,
+            icon: Icons.chat_outlined,
+            label: StringConstants.whatsappNumber,
+            value: customer.whatsappNumber ?? customer.phoneNumber,
+            onTap: () => _launchWhatsApp(context, whatsapp),
+            trailingAction: CustomerInfoActionButton(
+              icon: Icons.chat_rounded,
+              tooltip: 'WhatsApp',
+              useWhatsAppBrand: true,
+              onPressed: () => _launchWhatsApp(context, whatsapp),
+            ),
+          ),
+          if (customer.email?.trim().isNotEmpty ?? false) ...[
+            const Divider(height: 1, indent: 48),
+            CustomerInfoTile(
+              compact: true,
+              icon: Icons.email_outlined,
+              label: StringConstants.email,
+              value: customer.email!,
+            ),
+          ],
+          if (customer.address?.trim().isNotEmpty ?? false) ...[
+            const Divider(height: 1, indent: 48),
+            CustomerInfoTile(
+              compact: true,
+              icon: Icons.home_outlined,
+              label: StringConstants.address,
+              value: customer.address!,
+            ),
+          ],
+          if (customer.city?.trim().isNotEmpty ?? false) ...[
+            const Divider(height: 1, indent: 48),
+            CustomerInfoTile(
+              compact: true,
+              icon: Icons.location_city_outlined,
+              label: StringConstants.city,
+              value: customer.city!,
+            ),
+          ],
+          if (customer.notes?.trim().isNotEmpty ?? false) ...[
+            const Divider(height: 1, indent: 48),
+            CustomerInfoTile(
+              compact: true,
+              icon: Icons.notes_outlined,
+              label: StringConstants.notes,
+              value: customer.notes!,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<Customer?> customerAsync =
@@ -204,6 +392,8 @@ class CustomerDetailPage extends ConsumerWidget {
           ? null
           : FloatingActionButton.extended(
               heroTag: 'customer-add-vehicle-fab',
+              backgroundColor: AppColors.charcoal,
+              foregroundColor: AppColors.white,
               onPressed: () => context.push(
                 AppRoutes.addVehicleForCustomer(customerId),
               ),
@@ -223,168 +413,81 @@ class CustomerDetailPage extends ConsumerWidget {
 
           final String whatsapp =
               customer.whatsappNumber ?? customer.phoneNumber;
+          final List<Vehicle> vehicles =
+              vehiclesAsync.maybeWhen(data: (v) => v, orElse: () => <Vehicle>[]);
 
           return ListView(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.screenPadding,
+              AppSpacing.md,
               AppSpacing.screenPadding,
-              AppSpacing.screenPadding,
-              100,
+              96,
             ),
             children: [
-              Center(
-                child: Column(
-                  children: [
-                    CustomerAvatar(
-                      name: customer.fullName,
-                      size: 96,
-                      fontSize: 40,
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    Text(
-                      customer.fullName,
-                      style: AppTextStyles.headlineSmall,
-                      textAlign: TextAlign.center,
-                    ),
-                    if (customer.isArchived) ...[
-                      const SizedBox(height: AppSpacing.sm),
-                      Chip(
-                        avatar: const Icon(Icons.archive_outlined, size: 16),
-                        label: const Text('Archived'),
-                        backgroundColor:
-                            AppColors.warning.withValues(alpha: 0.15),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xxl),
-              vehiclesAsync.when(
-                loading: () => const SizedBox.shrink(),
-                error: (_, _) => const SizedBox.shrink(),
-                data: (vehicles) {
-                  if (customer.isArchived) {
-                    return PrimaryButton(
-                      label: StringConstants.openWhatsApp,
-                      icon: Icons.chat_rounded,
-                      onPressed: () => _launchWhatsApp(context, whatsapp),
-                    );
-                  }
-                  return Column(
-                    children: [
-                      PrimaryButton(
-                        label: StringConstants.openWhatsApp,
-                        icon: Icons.chat_rounded,
-                        onPressed: () => _launchWhatsApp(context, whatsapp),
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      SecondaryButton(
-                        label: 'Update Maintenance Log',
-                        icon: Icons.note_alt_outlined,
-                        onPressed: () =>
-                            _openUpdateMaintenanceLog(context, vehicles),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              const SizedBox(height: AppSpacing.xxl),
-              const SectionTitle(
-                title: 'Customer Information',
-                padding: EdgeInsets.only(bottom: AppSpacing.md),
-              ),
-              AppCard(
-                child: Column(
-                  children: [
-                    CustomerInfoTile(
-                      icon: Icons.phone_outlined,
-                      label: StringConstants.phoneNumber,
-                      value: customer.phoneNumber,
-                      onTap: () => _launchTel(context, customer.phoneNumber),
-                    ),
-                    const Divider(height: 1),
-                    CustomerInfoTile(
-                      icon: Icons.chat_outlined,
-                      label: StringConstants.whatsappNumber,
-                      value: customer.whatsappNumber ?? '',
-                      onTap: customer.whatsappNumber == null
-                          ? null
-                          : () => _launchWhatsApp(
-                                context,
-                                customer.whatsappNumber!,
-                              ),
-                    ),
-                    const Divider(height: 1),
-                    CustomerInfoTile(
-                      icon: Icons.email_outlined,
-                      label: StringConstants.email,
-                      value: customer.email ?? '',
-                    ),
-                    const Divider(height: 1),
-                    CustomerInfoTile(
-                      icon: Icons.home_outlined,
-                      label: StringConstants.address,
-                      value: customer.address ?? '',
-                    ),
-                    const Divider(height: 1),
-                    CustomerInfoTile(
-                      icon: Icons.location_city_outlined,
-                      label: StringConstants.city,
-                      value: customer.city ?? '',
-                    ),
-                    const Divider(height: 1),
-                    CustomerInfoTile(
-                      icon: Icons.notes_outlined,
-                      label: StringConstants.notes,
-                      value: customer.notes ?? '',
-                    ),
-                  ],
-                ),
+              _buildHeroCard(
+                context,
+                customer: customer,
+                whatsapp: whatsapp,
+                vehicles: vehicles,
               ),
               const SizedBox(height: AppSpacing.lg),
-              AppCard(
-                child: Column(
-                  children: [
-                    CustomerInfoTile(
+              Text(
+                'Customer Information',
+                style: AppTextStyles.titleSmall.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              _buildContactSection(
+                context,
+                customer: customer,
+                whatsapp: whatsapp,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Row(
+                children: [
+                  Expanded(
+                    child: _MetaChip(
                       icon: Icons.calendar_today_outlined,
                       label: 'Created',
                       value: customer.createdAt.formattedDateTime,
                     ),
-                    const Divider(height: 1),
-                    CustomerInfoTile(
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: _MetaChip(
                       icon: Icons.update_outlined,
-                      label: 'Last Updated',
+                      label: 'Updated',
                       value: customer.updatedAt.formattedDateTime,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const SizedBox(height: AppSpacing.xxl),
-              SectionTitle(
-                title: 'Vehicle Information',
-                trailing: customer.isArchived
-                    ? null
-                    : TextButton.icon(
-                        onPressed: () => context.push(
-                          AppRoutes.addVehicleForCustomer(customerId),
-                        ),
-                        icon: const Icon(Icons.add_rounded, size: 18),
-                        label: const Text(StringConstants.addVehicle),
+              const SizedBox(height: AppSpacing.lg),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Vehicles',
+                      style: AppTextStyles.titleSmall.copyWith(
+                        fontWeight: FontWeight.w700,
                       ),
-                padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                    ),
+                  ),
+                  if (!customer.isArchived)
+                    TextButton.icon(
+                      onPressed: () => context.push(
+                        AppRoutes.addVehicleForCustomer(customerId),
+                      ),
+                      icon: const Icon(Icons.add_rounded, size: 18),
+                      label: const Text(StringConstants.addVehicle),
+                    ),
+                ],
               ),
-              Text(
-                'Tap a vehicle to open its details. One customer can have multiple vehicles.',
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? AppColors.silver
-                      : AppColors.grey600,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.sm),
               vehiclesAsync.when(
                 loading: () => const Padding(
-                  padding: EdgeInsets.all(AppSpacing.xxl),
+                  padding: EdgeInsets.all(AppSpacing.xl),
                   child: Center(child: LoadingIndicator()),
                 ),
                 error: (error, _) => AppErrorWidget(
@@ -392,8 +495,8 @@ class CustomerDetailPage extends ConsumerWidget {
                   onRetry: () =>
                       ref.invalidate(vehiclesByCustomerProvider(customerId)),
                 ),
-                data: (vehicles) {
-                  if (vehicles.isEmpty) {
+                data: (vehicleList) {
+                  if (vehicleList.isEmpty) {
                     return EmptyState(
                       title: StringConstants.noVehicles,
                       message: StringConstants.noVehiclesSubtitle,
@@ -410,7 +513,7 @@ class CustomerDetailPage extends ConsumerWidget {
                   }
                   return Column(
                     children: [
-                      for (final vehicle in vehicles)
+                      for (final vehicle in vehicleList)
                         VehicleCard(
                           vehicle: vehicle,
                           compact: true,
@@ -423,9 +526,9 @@ class CustomerDetailPage extends ConsumerWidget {
                   );
                 },
               ),
-              const SizedBox(height: AppSpacing.xxl),
+              const SizedBox(height: AppSpacing.lg),
               if (!customer.isArchived) ...[
-                PrimaryButton(
+                SecondaryButton(
                   label: StringConstants.editCustomer,
                   icon: Icons.edit_rounded,
                   isLoading: isMutating,
@@ -434,7 +537,7 @@ class CustomerDetailPage extends ConsumerWidget {
                       : () =>
                           context.push(AppRoutes.editCustomerPath(customerId)),
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: AppSpacing.sm),
                 SecondaryButton(
                   label: StringConstants.archiveCustomer,
                   icon: Icons.archive_outlined,
@@ -443,17 +546,67 @@ class CustomerDetailPage extends ConsumerWidget {
                       : () => _archive(context, ref, customer),
                 ),
               ] else
-                PrimaryButton(
+                SecondaryButton(
                   label: StringConstants.restoreCustomer,
                   icon: Icons.unarchive_outlined,
                   isLoading: isMutating,
                   onPressed:
                       isMutating ? null : () => _restore(context, ref, customer),
                 ),
-              const SizedBox(height: AppSpacing.xxl),
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _MetaChip extends StatelessWidget {
+  const _MetaChip({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color muted = Theme.of(context).brightness == Brightness.dark
+        ? AppColors.silver
+        : AppColors.grey600;
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: AppColors.grey100,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 14, color: muted),
+              const SizedBox(width: AppSpacing.xxs),
+              Text(
+                label,
+                style: AppTextStyles.labelSmall.copyWith(color: muted),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.xxs),
+          Text(
+            value,
+            style: AppTextStyles.bodySmall.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

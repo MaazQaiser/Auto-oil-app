@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
@@ -5,6 +7,7 @@ import '../../../../core/config/app_config.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/services/background/background_work.dart';
 import '../../../../core/sync/sync_providers.dart';
+import '../../../../core/utils/logger.dart';
 import '../../../../shared/providers/database_provider.dart';
 import '../../../customers/presentation/providers/customer_providers.dart';
 import '../../../reminders/domain/entities/maintenance_reminder.dart';
@@ -222,17 +225,28 @@ final notificationBootstrapProvider = FutureProvider<void>((ref) async {
     },
   );
 
+  // Permission prompts during bootstrap can stall first paint on simulators.
   if (settings.notificationsEnabled) {
-    await permissions.ensureGranted();
-    await initializeBackgroundWork();
-    await registerBackgroundTasks(
-      dailyHour: settings.dailyReminderHour,
-      dailyMinute: settings.dailyReminderMinute,
-    );
-    await scheduler.scheduleMorningSummary(
-      hour: settings.dailyReminderHour,
-      minute: settings.dailyReminderMinute,
-    );
+    unawaited(Future<void>(() async {
+      try {
+        await permissions.ensureGranted();
+        await initializeBackgroundWork();
+        await registerBackgroundTasks(
+          dailyHour: settings.dailyReminderHour,
+          dailyMinute: settings.dailyReminderMinute,
+        );
+        await scheduler.scheduleMorningSummary(
+          hour: settings.dailyReminderHour,
+          minute: settings.dailyReminderMinute,
+        );
+      } catch (e, st) {
+        AppLogger.error(
+          'Deferred notification setup failed',
+          error: e,
+          stackTrace: st,
+        );
+      }
+    }));
   }
 
   await manager.runReminderCheck();

@@ -10,6 +10,12 @@ abstract class AuthRepository {
   /// Signs in with email + password. Throws [AuthException] on failure.
   Future<AuthUser> signIn({required String email, required String password});
 
+  /// Creates an email/password account and signs it in.
+  Future<AuthUser> createAccount({
+    required String email,
+    required String password,
+  });
+
   /// Signs out the current user.
   Future<void> signOut();
 

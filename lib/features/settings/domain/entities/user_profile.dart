@@ -76,9 +76,9 @@ class UserProfile extends Equatable {
   final DateTime updatedAt;
 
   ThemeMode get themeModeValue => switch (themeMode) {
-        'light' => ThemeMode.light,
         'dark' => ThemeMode.dark,
-        _ => ThemeMode.system,
+        'system' => ThemeMode.system,
+        _ => ThemeMode.light,
       };
 
   Map<String, dynamic> get extraFields {
@@ -114,7 +114,7 @@ class UserProfile extends Equatable {
       invoiceCurrencySymbol: AppConstants.defaultCurrencySymbol,
       invoicePrefix: 'INV',
       invoiceNextNumber: 1,
-      themeMode: 'system',
+      themeMode: 'light',
       language: AppConfig.defaultLanguage,
       notificationsEnabled: true,
       dailyReminderHour: 8,
@@ -305,7 +305,7 @@ class UserProfile extends Equatable {
           AppConstants.defaultCurrencySymbol,
       invoicePrefix: m['invoicePrefix'] as String? ?? 'INV',
       invoiceNextNumber: m['invoiceNextNumber'] as int? ?? 1,
-      themeMode: m['themeMode'] as String? ?? 'system',
+      themeMode: m['themeMode'] as String? ?? 'light',
       language: m['language'] as String? ?? AppConfig.defaultLanguage,
       notificationsEnabled: m['notificationsEnabled'] as bool? ?? true,
       dailyReminderHour: m['dailyReminderHour'] as int? ?? 8,

@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/config/app_config.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/brand_logo.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 
@@ -18,41 +17,20 @@ class SplashPage extends ConsumerStatefulWidget {
   ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends ConsumerState<SplashPage>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _fadeAnimation;
-  late final Animation<double> _scaleAnimation;
-
+class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    );
-    _fadeAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeOut,
-    );
-    _scaleAnimation = Tween<double>(begin: 0.88, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
-    );
-    _controller.forward();
-    _navigateAfterDelay();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _navigateAfterDelay());
   }
 
   Future<void> _navigateAfterDelay() async {
     await Future<void>.delayed(AppConfig.splashDuration);
     if (!mounted) return;
     final user = FirebaseAuth.instance.currentUser;
-    context.go(user != null ? AppRoutes.dashboard : AppRoutes.login);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    final String target =
+        user != null ? AppRoutes.dashboard : AppRoutes.login;
+    context.go(target);
   }
 
   @override
@@ -72,23 +50,17 @@ class _SplashPageState extends ConsumerState<SplashPage>
             ],
           ),
         ),
-        child: FadeTransition(
-          opacity: _fadeAnimation,
-          child: ScaleTransition(
-            scale: _scaleAnimation,
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BrandLogo(size: 200),
-                SizedBox(height: AppSpacing.huge),
-                LoadingIndicator(
-                  color: AppColors.gold,
-                  size: 28,
-                  strokeWidth: 2.5,
-                ),
-              ],
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BrandLogo(size: 160),
+            SizedBox(height: 40),
+            LoadingIndicator(
+              color: AppColors.gold,
+              size: 28,
+              strokeWidth: 2.5,
             ),
-          ),
+          ],
         ),
       ),
     );
