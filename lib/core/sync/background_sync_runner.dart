@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import '../config/firebase_bootstrap.dart';
 
-import '../../firebase_options.dart';
 import '../database/app_database.dart';
 import '../services/auth_preferences.dart';
 import '../utils/logger.dart';
@@ -14,19 +12,21 @@ import 'sync_outbox_datasource.dart';
 class BackgroundSyncRunner {
   static Future<bool> run() async {
     try {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      final ready = await FirebaseBootstrap.ensureInitialized();
+      if (!ready) {
+        AppLogger.info('Background sync skipped — Firebase unavailable');
+        return true;
+      }
 
       final authPrefs = await AuthPreferences.create();
       final String? uid =
-          authPrefs.activeUid ?? FirebaseAuth.instance.currentUser?.uid;
+          authPrefs.activeUid ?? FirebaseBootstrap.currentUser?.uid;
       if (uid == null) {
         AppLogger.info('Background sync skipped — no active user');
         return true;
       }
 
-      if (FirebaseAuth.instance.currentUser == null) {
+      if (FirebaseBootstrap.currentUser == null) {
         AppLogger.info('Background sync skipped — not authenticated');
         return true;
       }

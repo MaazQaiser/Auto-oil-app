@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../core/config/firebase_bootstrap.dart';
 
 import '../../../../core/constants/string_constants.dart';
 import '../../../../core/router/route_names.dart';
@@ -30,7 +31,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   Widget build(BuildContext context) {
     final AppSettings settings = ref.watch(settingsProvider);
     final profile = ref.watch(settingsServiceProvider);
-    final firebaseUser = fb.FirebaseAuth.instance.currentUser;
+    final firebaseUser = FirebaseBootstrap.currentUser;
     final firebaseEmail = firebaseUser?.email ?? '';
 
     return Scaffold(
@@ -390,7 +391,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     if (confirmed != true || !context.mounted) return;
 
     try {
-      await fb.FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      final auth = FirebaseBootstrap.auth;
+      if (auth == null) {
+        if (!context.mounted) return;
+        SnackBarHelper.error(context, 'Firebase is unavailable');
+        return;
+      }
+      await auth.sendPasswordResetEmail(email: email);
       if (!context.mounted) return;
       SnackBarHelper.success(context, 'Password reset email sent');
     } catch (e) {

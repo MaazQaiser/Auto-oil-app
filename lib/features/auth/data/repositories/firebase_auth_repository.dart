@@ -2,18 +2,25 @@ import 'package:firebase_auth/firebase_auth.dart' as fb;
 
 import '../../domain/entities/auth_user.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../../../core/config/firebase_bootstrap.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
-  FirebaseAuthRepository() : _auth = fb.FirebaseAuth.instance;
-
-  final fb.FirebaseAuth _auth;
+  fb.FirebaseAuth get _auth {
+    final auth = FirebaseBootstrap.auth;
+    if (auth == null) {
+      throw const AuthException(
+        'Firebase is not available. Check your connection and try again.',
+      );
+    }
+    return auth;
+  }
 
   @override
   Stream<AuthUser?> get authStateChanges =>
-      _auth.authStateChanges().map(_mapUser);
+      FirebaseBootstrap.authStateChanges().map(_mapUser);
 
   @override
-  AuthUser? get currentUser => _mapUser(_auth.currentUser);
+  AuthUser? get currentUser => _mapUser(FirebaseBootstrap.currentUser);
 
   @override
   Future<AuthUser> signIn({

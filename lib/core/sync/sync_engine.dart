@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../config/firebase_bootstrap.dart';
 import '../utils/logger.dart';
 import 'firestore_remote_datasource.dart';
 import 'local_sync_mirror.dart';
@@ -25,13 +26,13 @@ class SyncEngine implements SyncQueue {
   })  : _outbox = outbox,
         _remote = remote,
         _mirror = mirror,
-        _auth = auth ?? FirebaseAuth.instance,
+        _auth = auth ?? FirebaseBootstrap.auth,
         _connectivity = connectivity ?? Connectivity();
 
   final SyncOutboxDataSource _outbox;
   final FirestoreRemoteDataSource _remote;
   final LocalSyncMirror _mirror;
-  final FirebaseAuth _auth;
+  final FirebaseAuth? _auth;
   final Connectivity _connectivity;
 
   StreamSubscription<List<ConnectivityResult>>? _connectivitySub;
@@ -139,7 +140,7 @@ class SyncEngine implements SyncQueue {
       return;
     }
 
-    final User? user = _auth.currentUser;
+    final User? user = _auth?.currentUser;
     if (user == null) {
       _setStatus(SyncStatus.idle);
       return;

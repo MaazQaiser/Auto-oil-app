@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/app_config.dart';
+import '../../../../core/config/firebase_bootstrap.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/brand_logo.dart';
@@ -27,7 +27,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   Future<void> _navigateAfterDelay() async {
     await Future<void>.delayed(AppConfig.splashDuration);
     if (!mounted) return;
-    final user = FirebaseAuth.instance.currentUser;
+    final user = FirebaseBootstrap.currentUser;
     final String target =
         user != null ? AppRoutes.dashboard : AppRoutes.login;
     context.go(target);

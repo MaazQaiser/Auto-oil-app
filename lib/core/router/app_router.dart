@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../config/firebase_bootstrap.dart';
 
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/providers/auth_providers.dart';
@@ -42,7 +43,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     // A route must be immediately usable even when startup services are still
     // warming up. The old splash route waited on a delayed callback that could
     // be starved by plugin initialization on iOS simulators.
-    initialLocation: fb.FirebaseAuth.instance.currentUser != null
+    initialLocation: FirebaseBootstrap.currentUser != null
         ? AppRoutes.dashboard
         : AppRoutes.login,
     refreshListenable: authNotifier,
@@ -50,7 +51,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final location = state.matchedLocation;
 
-      final isLoggedIn = fb.FirebaseAuth.instance.currentUser != null;
+      final isLoggedIn = FirebaseBootstrap.currentUser != null;
 
       if (location == AppRoutes.splash) {
         return isLoggedIn ? AppRoutes.dashboard : AppRoutes.login;

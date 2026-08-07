@@ -77,18 +77,35 @@ class AppDatabase extends _$AppDatabase {
         }
         if (from < 11) {
           await m.createTable(userProfiles);
-        } else if (from < 12) {
-          await m.addColumn(userProfiles, userProfiles.schemaVersion);
-          await m.addColumn(userProfiles, userProfiles.accountStatus);
-          await m.addColumn(userProfiles, userProfiles.workshopTagline);
-          await m.addColumn(userProfiles, userProfiles.workshopEmail);
-          await m.addColumn(userProfiles, userProfiles.workshopLogoUrl);
-          await m.addColumn(userProfiles, userProfiles.countryCode);
-          await m.addColumn(userProfiles, userProfiles.timezone);
-          await m.addColumn(userProfiles, userProfiles.extraJson);
+        }
+        if (from >= 11 && from < 12) {
+          await _addUserProfileV12Columns(m);
         }
       },
     );
+  }
+
+  Future<void> _addUserProfileV12Columns(Migrator m) async {
+    Future<void> addColumn(GeneratedColumn<Object> column) async {
+      try {
+        await m.addColumn(userProfiles, column);
+      } catch (e) {
+        final message = e.toString().toLowerCase();
+        if (message.contains('duplicate column')) {
+          return;
+        }
+        rethrow;
+      }
+    }
+
+    await addColumn(userProfiles.schemaVersion);
+    await addColumn(userProfiles.accountStatus);
+    await addColumn(userProfiles.workshopTagline);
+    await addColumn(userProfiles.workshopEmail);
+    await addColumn(userProfiles.workshopLogoUrl);
+    await addColumn(userProfiles.countryCode);
+    await addColumn(userProfiles.timezone);
+    await addColumn(userProfiles.extraJson);
   }
 
   static QueryExecutor _openConnection() {
